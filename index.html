@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Enumerator & Admin Data BPS Kab. Demak</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bps: {
+                            blue: '#003366',
+                            orange: '#FF6600',
+                            green: '#009933',
+                            lightbg: '#F8FAFC',
+                            darkbg: '#0F172A',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .bps-gradient {
+            background: linear-gradient(135deg, #003366 0%, #001f3f 100%);
+        }
+        .bps-accent-gradient {
+            background: linear-gradient(135deg, #FF6600 0%, #E65C00 100%);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Brand Identitas BPS -->
+                <div class="flex items-center space-x-3">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-bps-blue text-white font-bold text-xl shadow-md border-b-2 border-bps-orange">
+                        <i class="fa-solid fa-chart-pie text-bps-orange text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold tracking-tight text-bps-blue dark:text-white block leading-tight">Mitra BPS Demak</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Enumerator & Admin Data</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex space-x-6 text-sm font-semibold">
+                    <a href="#beranda" class="text-bps-blue dark:text-slate-200 hover:text-bps-orange dark:hover:text-bps-orange transition">Beranda</a>
+                    <a href="#profil" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Profil & Keahlian</a>
+                    <a href="#portofolio" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sensus & Survei</a>
+                    <a href="#database" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition flex items-center gap-1">
+                        <span class="relative flex h-2 w-2">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-bps-orange opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-2 w-2 bg-bps-orange"></span>
+                        </span>
+                        Database Data
+                    </a>
+                    <a href="#sertifikat" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sertifikat</a>
+                    <a href="#kontak" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Kontak</a>
+                </nav>
+
+                <!-- Action Controls -->
+                <div class="flex items-center gap-3">
+                    <!-- Dark Mode Toggle -->
+                    <button id="themeToggleBtn" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                        <i id="themeIcon" class="fa-solid fa-moon"></i>
+                    </button>
+                    <!-- Mobile Hamburger -->
+                    <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-2 text-sm font-medium">
+            <a href="#beranda" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Beranda</a>
+            <a href="#profil" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Profil & Keahlian</a>
+            <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sensus & Survei</a>
+            <a href="#database" class="block py-2 text-bps-orange font-semibold">Database Data (CRUD)</a>
+            <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikat & Prestasi</a>
+            <a href="#kontak" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kontak</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28 bg-gradient-to-b from-slate-100 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 text-bps-blue dark:text-blue-300 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-bps-green animate-pulse"></span>
+                        Mitra Statistik Resmi BPS Kabupaten Demak
+                    </div>
+                    
+                    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                        Mengawal Akurasi Data untuk <span class="text-transparent bg-clip-text bg-gradient-to-r from-bps-blue via-blue-600 to-bps-orange">Pembangunan Demak</span>
+                    </h1>
+                    
+                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Selamat datang di portofolio digital profesional. Berpengalaman tinggi dalam pendataan lapangan (CAPI/PAPI), validasi statistik, serta pengolahan database untuk berbagai Sensus & Survei Statistik Nasional BPS.
+                    </p>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#portofolio" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white font-semibold text-sm shadow-lg shadow-blue-900/20 hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-briefcase"></i>
+                            Lihat Portofolio Sensus
+                        </a>
+                        <a href="#database" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-bps-orange hover:bg-orange-600 text-white font-semibold text-sm shadow-lg shadow-orange-500/20 hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-database"></i>
+                            Kelola Database Data
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Right Column: Stat Cards Grid -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-4">
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-bps-blue dark:text-blue-300 flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-clipboard-list text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-extrabold text-slate-900 dark:text-white">12+</p>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Sensus & Survei Diikuti</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900/50 text-bps-orange flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-users text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-extrabold text-slate-900 dark:text-white">1,850+</p>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Responden Diwawancarai</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/50 text-bps-green flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-circle-check text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-extrabold text-slate-900 dark:text-white">99.8%</p>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Tingkat Akurasi Data</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition">
+                        <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/50 text-purple-600 dark:text-purple-300 flex items-center justify-center mb-3">
+                            <i class="fa-solid fa-map-location-dot text-xl"></i>
+                        </div>
+                        <p class="text-2xl font-extrabold text-slate-900 dark:text-white">14 Kec.</p>
+                        <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mt-1">Cakupan Wilayah Demak</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile & Skills Section -->
+    <section id="profil" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Profil Profesional</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Keahlian & Pengalaman Teknis</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Bio Card -->
+                <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-800/60 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-full bg-bps-blue flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                            HA
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Handar Arfianto, AMd.Stat.</h3>
+                            <p class="text-sm text-bps-orange font-semibold">Mitra Statistik / Admin Data BPS Demak</p>
+                            <span class="inline-flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400 mt-1">
+                                <i class="fa-solid fa-location-dot"></i> Kab. Demak, Jawa Tengah
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+                        Dedikasi lebih dari 14 tahun sebagai Mitra Statistik BPS Kabupaten Demak. Terbiasa menangani tantangan pendataan lapangan dari wilayah perkotaan hingga pesisir Demak, memastikan entri data sesuai standar SOP BPS.
+                    </p>
+                    <div class="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-bps-green"></i>
+                            <span>Sertifikasi Petugas Pendataan CAPI BPS</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-bps-green"></i>
+                            <span>Pengalaman Supervisor Lapangan & Validasi</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-bps-green"></i>
+                            <span>Spesialisasi Pengolahan Database Sensus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Skills -->
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/40">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="p-2.5 rounded-lg bg-blue-100 text-bps-blue dark:bg-blue-900/50 dark:text-blue-300">
+                                <i class="fa-solid fa-mobile-screen-button text-lg"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Metode CAPI & PAPI</h4>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Mahir mengoperasikan aplikasi CAPI resmi BPS (FASIH, ST2023 CAPI, SP2020 CAPI) serta wawancara langsung PAPI.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/40">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="p-2.5 rounded-lg bg-orange-100 text-bps-orange dark:bg-orange-900/50">
+                                <i class="fa-solid fa-database text-lg"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Database & Validasi</h4>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Pengelolaan SQL dasar, Excel Advanced (Pivot, VLOOKUP/XLOOKUP, Macro), dan pembersihan data anomali lapangan.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/40">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="p-2.5 rounded-lg bg-green-100 text-bps-green dark:bg-green-900/50">
+                                <i class="fa-solid fa-chart-line text-lg"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Software Olah Data</h4>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Penggunaan SPSS untuk analisis deskriptif, pemetaaan spasial dasar menggunakan QGIS/Wilkerstat BPS.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800/40">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="p-2.5 rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-900/50 dark:text-purple-300">
+                                <i class="fa-solid fa-handshake text-lg"></i>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white">Komunikasi Lapangan</h4>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            Pendekatan persuasif dan etika wawancara tinggi kepada masyarakat Demak guna meminimalisir *non-response rate*.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Sensus & Survei Section -->
+    <section id="portofolio" class="py-16 bg-slate-50 dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Rekam Jejak Lapangan</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Portofolio Sensus & Survei BPS</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+                <button onclick="filterPortfolio('all')" class="portfolio-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-bps-blue text-white shadow-md transition">Semua Kegiatan</button>
+                <button onclick="filterPortfolio('sensus')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Sensus Nasional</button>
+                <button onclick="filterPortfolio('sosial')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Survei Sosial Ekonomi</button>
+                <button onclick="filterPortfolio('produksi')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Pertanian & Industri</button>
+            </div>
+
+            <!-- Portfolio Cards Grid -->
+            <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Javascript will inject portfolio cards dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Database Section (CRUD Data Manager) -->
+    <section id="database" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-orange-100 dark:bg-orange-950 text-bps-orange text-xs font-bold mb-2">
+                        <i class="fa-solid fa-server"></i> Simulated Live System
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Database Hasil Lapangan BPS Demak</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Modul Simulasi Admin Data untuk mengelola, memvalidasi, serta mengekspor entri survei.</p>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <button onclick="exportToCSV()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-csv text-bps-green text-sm"></i> Ekspor CSV
+                    </button>
+                    <button onclick="openAddModal()" class="px-4 py-2.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white text-xs font-bold transition flex items-center gap-2 shadow-md">
+                        <i class="fa-solid fa-plus"></i> Tambah Entry Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Visual Dashboard Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-3">Status Verifikasi Entry Data</h4>
+                    <div class="h-48 flex items-center justify-center">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700">
+                    <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-3">Distribusi per Kecamatan Demak</h4>
+                    <div class="h-48 flex items-center justify-center">
+                        <canvas id="districtChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Ringkasan Modul Database</h4>
+                        <div class="space-y-3 mt-4">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500">Total Record Data:</span>
+                                <span id="statTotal" class="font-bold text-slate-900 dark:text-white">0</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500">Tervalidasi (Clean):</span>
+                                <span id="statValid" class="font-bold text-bps-green">0</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500">Menunggu Verifikasi:</span>
+                                <span id="statPending" class="font-bold text-bps-orange">0</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="text-slate-500">Perlu Perbaikan Lapangan:</span>
+                                <span id="statError" class="font-bold text-red-500">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-700 text-[11px] text-slate-400">
+                        <i class="fa-solid fa-circle-info mr-1"></i> Data diperbarui secara real-time pada simulasi lokal browser.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters & Search Bar -->
+            <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-t-2xl border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="relative w-full sm:w-72">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Cari Nama/Kecamatan/ID..." class="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue">
+                </div>
+                
+                <div class="flex items-center gap-2 w-full sm:w-auto">
+                    <select id="filterStatus" onchange="renderTable()" class="w-full sm:w-auto px-3 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue text-slate-700 dark:text-slate-200 font-medium">
+                        <option value="ALL">Semua Status</option>
+                        <option value="Tervalidasi">Tervalidasi</option>
+                        <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                        <option value="Perlu Perbaikan">Perlu Perbaikan</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Data Table -->
+            <div class="overflow-x-auto border-x border-b border-slate-200 dark:border-slate-700 rounded-b-2xl">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs uppercase font-bold tracking-wider">
+                            <th class="p-4">ID / NKS</th>
+                            <th class="p-4">Nama Responden / KRT</th>
+                            <th class="p-4">Kecamatan</th>
+                            <th class="p-4">Jenis Survei</th>
+                            <th class="p-4">Metode</th>
+                            <th class="p-4">Status Verifikasi</th>
+                            <th class="p-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody" class="divide-y divide-slate-200 dark:divide-slate-800 text-xs text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sertifikat & Prestasi -->
+    <section id="sertifikat" class="py-16 bg-slate-50 dark:bg-slate-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Sertifikat & Penghargaan</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cert 1 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-100 text-bps-blue dark:bg-blue-900 dark:text-blue-200">Sertifikat Petugas</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Petugas Pendataan Sensus Pertanian 2023 (ST2023)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Diterbitkan oleh BPS Kabupaten Demak atas kelulusan pelatihan dan capaian target pendataan CAPI.</p>
+                </div>
+
+                <!-- Cert 2 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950 text-bps-orange flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-orange-100 text-bps-orange dark:bg-orange-900 dark:text-orange-200">Penghargaan</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Mitra Statistik Terbaik Kategori Akurasi Data 2022</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Penghargaan atas keakuratan entri data Susenas dan minim perbaikan dari Penanggung Jawab Teknis.</p>
+                </div>
+
+                <!-- Cert 3 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-950 text-bps-green flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-green-100 text-bps-green dark:bg-green-900 dark:text-green-200">Pelatihan IT</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Pengolahan & Manajemen Database Statistik</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel untuk analisis daerah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto bg-bps-gradient text-white rounded-3xl p-8 sm:p-12 shadow-xl relative overflow-hidden">
+                <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <span class="text-bps-orange font-bold text-xs uppercase tracking-wider">Hubungi Mitra</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-1">Siap Berkolaborasi untuk Pendataan Selanjutnya</h2>
+                        <p class="text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+                            Terbuka untuk penugasan Sensus, Survei Lapangan, Verifikasi Verwali, serta Pengolahan Data Wilayah Kabupaten Demak & sekitarnya.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 text-xs">
+                        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                            <i class="fa-solid fa-envelope text-bps-orange text-lg"></i>
+                            <div>
+                                <p class="text-slate-400 text-[10px]">Email Profesional</p>
+                                <p class="font-semibold text-white">handar.data@gmail.com</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                            <i class="fa-brands fa-whatsapp text-bps-green text-lg"></i>
+                            <div>
+                                <p class="text-slate-400 text-[10px]">WhatsApp / Kontak</p>
+                                <p class="font-semibold text-white">+62 889-0295-7152</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl backdrop-blur-sm">
+                            <i class="fa-solid fa-building-columns text-bps-orange text-lg"></i>
+                            <div>
+                                <p class="text-slate-400 text-[10px]">Base Operasional</p>
+                                <p class="font-semibold text-white">BPS Kabupaten Demak, Jawa Tengah</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>© 2026 Portofolio Mitra Statistik BPS Kabupaten Demak. All rights reserved.</p>
+            <p class="text-[11px] text-slate-500">Website portofolio ini dikembangkan secara independen sebagai showcase kompetensi Enumerator & Admin Data.</p>
+        </div>
+    </footer>
+
+    <!-- Modal Entry Data (Add / Edit) -->
+    <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+            <div class="p-5 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <h3 id="modalTitle" class="font-bold text-slate-900 dark:text-white text-base">Tambah Data Lapangan Baru</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <form id="dataForm" onsubmit="saveData(event)" class="p-6 space-y-4 text-xs">
+                <input type="hidden" id="editIndex" value="-1">
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ID NKS / Sampel</label>
+                    <input type="text" id="formNks" required placeholder="Contoh: NKS-2026-0812" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Responden / Kepala RT</label>
+                    <input type="text" id="formNama" required placeholder="Nama Lengkap..." class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kecamatan</label>
+                        <select id="formKecamatan" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                            <option value="Mranggen">Mranggen</option>
+							<option value="Karangawen">Karangawen</option>
+							<option value="Guntur">Guntur</option>
+							<option value="Sayung">Sayung</option>
+							<option value="Karangtengah">Karangtengah</option>
+							<option value="Bonang">Bonang</option>
+							<option value="Demak">Demak</option>
+                            <option value="Wonosalam">Wonosalam</option>
+                            <option value="Dempet">Dempet</option>
+                            <option value="Kebonagung">Kebonagung</option>
+                            <option value="Gajah">Gajah</option>
+                            <option value="Karanganyar">Karanganyar</option>
+                            <option value="Mijen">Mijen</option>
+                            <option value="Wedung">Wedung</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Metode Pendataan</label>
+                        <select id="formMetode" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                            <option value="CAPI">CAPI (Aplikasi Digital)</option>
+                            <option value="PAPI">PAPI (Kertas/Dokumen)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Sensus / Survei</label>
+                    <input type="text" id="formSurvei" required placeholder="Misal: Susenas Maret 2026" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Verifikasi</label>
+                    <select id="formStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                        <option value="Tervalidasi">Tervalidasi (Clean)</option>
+                        <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                        <option value="Perlu Perbaikan">Perlu Perbaikan Lapangan</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue hover:bg-blue-900 text-white font-bold shadow-md">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data Portofolio Sensus/Survei
+        const portfolioData = [
+            {
+                title: "Sensus Pertanian 2023 (ST2023)",
+                category: "sensus",
+                year: "2023",
+                role: "Petugas Pendataan Lapangan (PPL)",
+                respondents: "250 UTP",
+                method: "CAPI (ST2023 App)",
+                status: "Selesai 100%",
+                desc: "Pendataan Unit Usaha Pertanian Perorangan di wilayah Kecamatan Wonosalam & Demak Kota."
+            },
+            {
+                title: "Survei Sosial Ekonomi Nasional (Susenas)",
+                category: "sosial",
+                year: "2024",
+                role: "Enumerator & Validasi",
+                respondents: "120 Rumah Tangga",
+                method: "CAPI (FASIH)",
+                status: "Selesai 100%",
+                desc: "Mengumpulkan data konsumsi/pengeluaran dan modul ketahanan pangan masyarakat."
+            },
+            {
+                title: "Survei Angkatan Kerja Nasional (Sakernas)",
+                category: "sosial",
+                year: "2023 - 2024",
+                role: "Petugas Pendataan Lapangan",
+                respondents: "180 Responden",
+                method: "CAPI / PAPI",
+                status: "Selesai 100%",
+                desc: "Pendataan indikator ketenagakerjaan, tingkat pengangguran terbuka di Kab. Demak."
+            },
+            {
+                title: "Pemutakhiran Sensus Ekonomi (SE2026 Prep)",
+                category: "sensus",
+                year: "2025",
+                role: "Admin Data & Geotagging",
+                respondents: "310 Usaha/Perusahaan",
+                method: "CAPI & GIS Mapping",
+                status: "Selesai 100%",
+                desc: "Pemutakhiran direktori perusahaan dan geotagging bangunan usaha berbasis Wilkerstat."
+            },
+            {
+                title: "Survei Ubinan Padi & Jagung (KSA)",
+                category: "produksi",
+                year: "2023 - 2025",
+                role: "Petugas Ubinan Lapangan",
+                respondents: "45 Titik Sampel",
+                method: "PAPI & App KSA",
+                status: "Rutin Berjalan",
+                desc: "Pengukuran riil produktivitas tanaman pangan kuadrat ubinan di lahan pertanian Demak."
+            },
+            {
+                title: "Survei Tingkat Penghunian Kamar Hotel (VHTS)",
+                category: "produksi",
+                year: "2024",
+                role: "Admin Entry Data",
+                respondents: "28 Akomodasi",
+                method: "Web Portal BPS",
+                status: "Selesai 100%",
+                desc: "Pengumpulan data bulanan indikator pariwisata dan okupansi hotel di Demak."
+            }
+        ];
+
+        // Initial Interactive Table Data (Simulasi Database BPS)
+        let sampleDatabase = [
+            { id: "NKS-2026-101", nama: "Siti Rahmawati", kecamatan: "Demak", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
+            { id: "NKS-2026-102", nama: "Hj. Ahmad Dahlan", kecamatan: "Sayung", survei: "Sakernas Feb 2026", metode: "CAPI", status: "Menunggu Verifikasi" },
+            { id: "NKS-2026-103", nama: "Sukarman", kecamatan: "Wonosalam", survei: "Survei Ubinan Padi", metode: "PAPI", status: "Perlu Perbaikan" },
+            { id: "NKS-2026-104", nama: "Bambang Mulyono", kecamatan: "Karangtengah", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
+            { id: "NKS-2026-105", nama: "Koperasi Tani Makmur", kecamatan: "Bonang", survei: "Survei Usaha Pertanian", metode: "CAPI", status: "Tervalidasi" }
+        ];
+
+        let statusChartInstance = null;
+        let districtChartInstance = null;
+
+        // Render Portfolio Cards
+        function renderPortfolio(filter = 'all') {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = '';
+
+            const filtered = filter === 'all' 
+                ? portfolioData 
+                : portfolioData.filter(item => item.category === filter);
+
+            filtered.forEach(item => {
+                const card = `
+                    <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start gap-2 mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-bps-blue dark:bg-blue-950 dark:text-blue-300">
+                                    ${item.year}
+                                </span>
+                                <span class="text-xs font-semibold text-bps-green flex items-center gap-1">
+                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${item.status}
+                                </span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-base mb-2">${item.title}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">${item.desc}</p>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs">
+                            <div class="flex justify-between text-slate-600 dark:text-slate-300">
+                                <span class="text-slate-400">Peran:</span>
+                                <span class="font-semibold">${item.role}</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600 dark:text-slate-300">
+                                <span class="text-slate-400">Target/Cakupan:</span>
+                                <span class="font-semibold">${item.respondents}</span>
+                            </div>
+                            <div class="flex justify-between text-slate-600 dark:text-slate-300">
+                                <span class="text-slate-400">Metode:</span>
+                                <span class="font-semibold text-bps-orange">${item.method}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // Filter Portfolio Active State
+        function filterPortfolio(category) {
+            document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-bps-blue', 'text-white', 'shadow-md');
+                btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            });
+
+            event.target.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            event.target.classList.add('bg-bps-blue', 'text-white', 'shadow-md');
+
+            renderPortfolio(category);
+        }
+
+        // Render Table and Stats
+        function renderTable() {
+            const tbody = document.getElementById('dataTableBody');
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const filterVal = document.getElementById('filterStatus').value;
+
+            tbody.innerHTML = '';
+
+            const filteredData = sampleDatabase.filter(item => {
+                const matchesSearch = item.id.toLowerCase().includes(searchVal) ||
+                                      item.nama.toLowerCase().includes(searchVal) ||
+                                      item.kecamatan.toLowerCase().includes(searchVal);
+                
+                const matchesFilter = filterVal === 'ALL' || item.status === filterVal;
+
+                return matchesSearch && matchesFilter;
+            });
+
+            filteredData.forEach((item, index) => {
+                let statusBadge = '';
+                if(item.status === 'Tervalidasi') {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-950/80 dark:text-green-300">Tervalidasi</span>`;
+                } else if(item.status === 'Menunggu Verifikasi') {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">Menunggu</span>`;
+                } else {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300">Perlu Perbaikan</span>`;
+                }
+
+                const originalIndex = sampleDatabase.indexOf(item);
+
+                const row = `
+                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
+                        <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">${item.id}</td>
+                        <td class="p-4 font-medium">${item.nama}</td>
+                        <td class="p-4">${item.kecamatan}</td>
+                        <td class="p-4">${item.survei}</td>
+                        <td class="p-4 font-semibold text-bps-blue dark:text-blue-300">${item.metode}</td>
+                        <td class="p-4">${statusBadge}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editData(${originalIndex})" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded dark:hover:bg-slate-800" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteData(${originalIndex})" class="p-1.5 text-red-600 hover:bg-red-50 rounded dark:hover:bg-slate-800" title="Hapus">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+
+            updateStatsAndCharts();
+        }
+
+        // Modal Handlers
+        function openAddModal() {
+            document.getElementById('modalTitle').innerText = 'Tambah Entry Data Lapangan';
+            document.getElementById('editIndex').value = '-1';
+            document.getElementById('dataForm').reset();
+            document.getElementById('dataModal').classList.remove('hidden');
+            document.getElementById('dataModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('dataModal').classList.add('hidden');
+            document.getElementById('dataModal').classList.remove('flex');
+        }
+
+        function saveData(e) {
+            e.preventDefault();
+            const editIdx = parseInt(document.getElementById('editIndex').value);
+            
+            const newData = {
+                id: document.getElementById('formNks').value,
+                nama: document.getElementById('formNama').value,
+                kecamatan: document.getElementById('formKecamatan').value,
+                survei: document.getElementById('formSurvei').value,
+                metode: document.getElementById('formMetode').value,
+                status: document.getElementById('formStatus').value
+            };
+
+            if (editIdx >= 0) {
+                sampleDatabase[editIdx] = newData;
+            } else {
+                sampleDatabase.unshift(newData);
+            }
+
+            closeModal();
+            renderTable();
+        }
+
+        function editData(index) {
+            const item = sampleDatabase[index];
+            document.getElementById('modalTitle').innerText = 'Edit Entry Data Lapangan';
+            document.getElementById('editIndex').value = index;
+            document.getElementById('formNks').value = item.id;
+            document.getElementById('formNama').value = item.nama;
+            document.getElementById('formKecamatan').value = item.kecamatan;
+            document.getElementById('formSurvei').value = item.survei;
+            document.getElementById('formMetode').value = item.metode;
+            document.getElementById('formStatus').value = item.status;
+
+            document.getElementById('dataModal').classList.remove('hidden');
+            document.getElementById('dataModal').classList.add('flex');
+        }
+
+        function deleteData(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus record data ini dari database?')) {
+                sampleDatabase.splice(index, 1);
+                renderTable();
+            }
+        }
+
+        // Export to CSV Function
+        function exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,ID_NKS,Nama_Responden,Kecamatan,Survei,Metode,Status\n";
+            sampleDatabase.forEach(row => {
+                csvContent += `"${row.id}","${row.nama}","${row.kecamatan}","${row.survei}","${row.metode}","${row.status}"\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Data_Hasil_Survei_BPS_Demak.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Update Dashboard Charts & Counters
+        function updateStatsAndCharts() {
+            const total = sampleDatabase.length;
+            const valid = sampleDatabase.filter(d => d.status === 'Tervalidasi').length;
+            const pending = sampleDatabase.filter(d => d.status === 'Menunggu Verifikasi').length;
+            const error = sampleDatabase.filter(d => d.status === 'Perlu Perbaikan').length;
+
+            document.getElementById('statTotal').innerText = total;
+            document.getElementById('statValid').innerText = valid;
+            document.getElementById('statPending').innerText = pending;
+            document.getElementById('statError').innerText = error;
+
+            // Chart 1: Status Distribution
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            if (statusChartInstance) statusChartInstance.destroy();
+
+            statusChartInstance = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Tervalidasi', 'Menunggu', 'Perbaikan'],
+                    datasets: [{
+                        data: [valid, pending, error],
+                        backgroundColor: ['#009933', '#FF6600', '#EF4444']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } }
+                    }
+                }
+            });
+
+            // Chart 2: District Aggregation
+            const districts = {};
+            sampleDatabase.forEach(item => {
+                districts[item.kecamatan] = (districts[item.kecamatan] || 0) + 1;
+            });
+
+            const districtCtx = document.getElementById('districtChart').getContext('2d');
+            if (districtChartInstance) districtChartInstance.destroy();
+
+            districtChartInstance = new Chart(districtCtx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(districts),
+                    datasets: [{
+                        label: 'Jumlah Record',
+                        data: Object.values(districts),
+                        backgroundColor: '#003366'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { stepSize: 1, font: { size: 9 } } },
+                        x: { ticks: { font: { size: 9 } } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Dark/Light Theme Switcher
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeIcon');
+
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // Initialize App
+        window.onload = function() {
+            renderPortfolio('all');
+            renderTable();
+        };
+    </script>
+</body>
+</html>
