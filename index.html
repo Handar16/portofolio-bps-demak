@@ -48,10 +48,10 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Brand Identitas BPS -->
                 <div class="flex items-center space-x-3">
-                    <img src="images/logo-baru.png" alt="Logo Mitra" class=w-10 h-10 object-contain">
-                     <div>
-                        <h1 class="text-lg font-bold text-slate-800 leading-tight">Mitra BPS Demak</h1>
-                        <p class="text-xs text-gray-500">Enumerator & Admin Data</p>
+                    <img src="images/logo-baru.png" alt="Logo Mitra" class="h-10 w-10 object-contain">
+                    <div>
+                        <h1 class="text-lg font-bold tracking-tight text-bps-blue dark:text-white block leading-tight">Mitra BPS Demak</h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Enumerator & Admin Data</p>
                     </div>
                 </div>
 
@@ -67,7 +67,8 @@
                         </span>
                         Database Data
                     </a>
-                    <a href="#sertifikat" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sertifikat</a>
+                    <a href="#dokumentasi" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Dokumentasi & Publikasi</a>
+                    <a href="#sertifikat" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sertifikasi</a>
                     <a href="#kontak" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Kontak</a>
                 </nav>
 
@@ -91,7 +92,8 @@
             <a href="#profil" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Profil & Keahlian</a>
             <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sensus & Survei</a>
             <a href="#database" class="block py-2 text-bps-orange font-semibold">Database Data (CRUD)</a>
-            <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikat & Prestasi</a>
+            <a href="#dokumentasi" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Dokumentasi & Publikasi</a>
+            <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikasi</a>
             <a href="#kontak" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kontak</a>
         </div>
     </header>
@@ -125,6 +127,10 @@
                         <a href="#database" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-bps-orange hover:bg-orange-600 text-white font-semibold text-sm shadow-lg shadow-orange-500/20 hover:shadow-xl transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-database"></i>
                             Kelola Database Data
+                        </a>
+                        <a href="#dokumentasi" class="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-images"></i>
+                            Dokumentasi & Publikasi
                         </a>
                     </div>
                 </div>
@@ -396,44 +402,237 @@
         </div>
     </section>
 
-    <!-- Sertifikat & Prestasi -->
+
+    <!-- Dokumentasi & Publikasi Section -->
+    <section id="dokumentasi" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Dokumentasi Kegiatan</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Dokumentasi & Publikasi yang Dilaksanakan</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+                    Kumpulan dokumentasi kegiatan lapangan, pengolahan data, pelatihan, serta publikasi hasil pekerjaan.
+                    Data pada bagian ini dapat disesuaikan dengan dokumentasi dan tautan publikasi yang tersedia.
+                </p>
+            </div>
+
+            <!-- Activity Documentation -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
+                    <div class="h-40 bg-gradient-to-br from-bps-blue to-blue-900 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-clipboard-check text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Pendataan Lapangan</span>
+                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Sensus Pertanian 2023</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                            Dokumentasi kegiatan pendataan unit usaha pertanian, wawancara responden, dan proses validasi hasil pendataan.
+                        </p>
+                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar"></i> 2023
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
+                    <div class="h-40 bg-gradient-to-br from-bps-orange to-orange-700 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-people-group text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Survei</span>
+                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Susenas & Sakernas</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                            Dokumentasi proses wawancara, pemutakhiran data, pemeriksaan isian, dan koordinasi kegiatan survei.
+                        </p>
+                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar"></i> 2023–2026
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
+                    <div class="h-40 bg-gradient-to-br from-bps-green to-green-800 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-laptop-code text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Pengolahan Data</span>
+                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Validasi & Administrasi Data</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                            Dokumentasi pengolahan, pemeriksaan kelengkapan, validasi, pembersihan data, dan pengelolaan database.
+                        </p>
+                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar"></i> Berkelanjutan
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publication List -->
+            <div class="bg-slate-50 dark:bg-slate-950/70 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">
+                            <i class="fa-solid fa-newspaper text-bps-orange mr-2"></i>Daftar Publikasi & Output
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                            Catatan hasil pekerjaan yang dapat ditautkan ke dokumen atau halaman publikasi.
+                        </p>
+                    </div>
+                    <span class="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-950 text-bps-blue dark:text-blue-300 text-[10px] font-bold">
+                        PORTOFOLIO
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-800">
+                                <th class="py-3 pr-4">Tahun</th>
+                                <th class="py-3 pr-4">Kegiatan / Output</th>
+                                <th class="py-3 pr-4">Peran</th>
+                                <th class="py-3 pr-4">Jenis</th>
+                                <th class="py-3 text-right">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs divide-y divide-slate-200 dark:divide-slate-800">
+                            <tr>
+                                <td class="py-4 pr-4 font-semibold">2023</td>
+                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Dokumentasi Sensus Pertanian 2023</td>
+                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Petugas Pendataan Lapangan</td>
+                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300">Dokumentasi</span></td>
+                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 pr-4 font-semibold">2024</td>
+                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Dokumentasi Susenas & Sakernas</td>
+                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Enumerator & Validasi</td>
+                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-orange-50 dark:bg-orange-950 text-bps-orange">Dokumentasi</span></td>
+                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 pr-4 font-semibold">2025</td>
+                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Pemutakhiran Direktori & Geotagging</td>
+                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Admin Data & Geotagging</td>
+                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-green-50 dark:bg-green-950 text-bps-green">Output Data</span></td>
+                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-4 pr-4 font-semibold">2026</td>
+                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Portofolio Digital Enumerator & Admin Data</td>
+                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Pengembang / Admin</td>
+                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300">Publikasi</span></td>
+                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Aktif</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sertifikasi & Prestasi -->
     <section id="sertifikat" class="py-16 bg-slate-50 dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
-                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Sertifikat & Penghargaan</p>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Daftar Sertifikasi & Penghargaan</p>
                 <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-4">
+                    Daftar sertifikasi, pelatihan, dan penghargaan yang tercantum dalam portofolio.
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Cert 1 -->
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300 flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-award"></i>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Summary -->
+                <div class="lg:col-span-4">
+                    <div class="bg-bps-gradient rounded-2xl p-7 text-white shadow-lg sticky top-24">
+                        <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5">
+                            <i class="fa-solid fa-certificate text-2xl text-bps-orange"></i>
+                        </div>
+                        <p class="text-xs uppercase tracking-wider font-bold text-slate-300">Rekam Kompetensi</p>
+                        <p class="text-4xl font-extrabold mt-1">3+</p>
+                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
+                            Sertifikasi, pelatihan, dan penghargaan yang dapat ditampilkan sebagai bukti pengalaman profesional.
+                        </p>
+                        <div class="mt-6 pt-5 border-t border-white/10 space-y-3 text-xs">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-award text-bps-orange"></i>
+                                <span>Sertifikat petugas pendataan</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-laptop-code text-bps-orange"></i>
+                                <span>Pelatihan pengolahan data</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-star text-bps-orange"></i>
+                                <span>Penghargaan kinerja</span>
+                            </div>
+                        </div>
                     </div>
-                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-100 text-bps-blue dark:bg-blue-900 dark:text-blue-200">Sertifikat Petugas</span>
-                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Petugas Pendataan Sensus Pertanian 2023 (ST2023)</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Diterbitkan oleh BPS Kabupaten Demak atas kelulusan pelatihan dan capaian target pendataan CAPI.</p>
                 </div>
 
-                <!-- Cert 2 -->
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950 text-bps-orange flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-star"></i>
+                <!-- Certification List -->
+                <div class="lg:col-span-8 space-y-4">
+                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300 flex items-center justify-center">
+                                <i class="fa-solid fa-award text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex flex-wrap justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-blue-100 text-bps-blue dark:bg-blue-900 dark:text-blue-200">SERTIFIKAT PETUGAS</span>
+                                    <span class="text-[10px] font-semibold text-slate-400">2023</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Petugas Pendataan Sensus Pertanian 2023 (ST2023)</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                                    Diterbitkan oleh BPS Kabupaten Demak atas kelulusan pelatihan dan pelaksanaan pendataan ST2023.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-orange-100 text-bps-orange dark:bg-orange-900 dark:text-orange-200">Penghargaan</span>
-                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Mitra Statistik Terbaik Kategori Akurasi Data 2022</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Penghargaan atas keakuratan entri data Susenas dan minim perbaikan dari Penanggung Jawab Teknis.</p>
-                </div>
 
-                <!-- Cert 3 -->
-                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
-                    <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-950 text-bps-green flex items-center justify-center text-xl mb-4">
-                        <i class="fa-solid fa-certificate"></i>
+                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950 text-bps-orange flex items-center justify-center">
+                                <i class="fa-solid fa-star text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex flex-wrap justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-orange-100 text-bps-orange dark:bg-orange-900 dark:text-orange-200">PENGHARGAAN</span>
+                                    <span class="text-[10px] font-semibold text-slate-400">2022</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Mitra Statistik Terbaik Kategori Akurasi Data 2022</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                                    Penghargaan atas keakuratan entri data Susenas dan minim perbaikan dari Penanggung Jawab Teknis.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-green-100 text-bps-green dark:bg-green-900 dark:text-green-200">Pelatihan IT</span>
-                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Pengolahan & Manajemen Database Statistik</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel untuk analisis daerah.</p>
+
+                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                        <div class="flex gap-4">
+                            <div class="shrink-0 w-12 h-12 rounded-xl bg-green-50 dark:bg-green-950 text-bps-green flex items-center justify-center">
+                                <i class="fa-solid fa-certificate text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex flex-wrap justify-between gap-2">
+                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-green-100 text-bps-green dark:bg-green-900 dark:text-green-200">PELATIHAN IT</span>
+                                    <span class="text-[10px] font-semibold text-slate-400">-</span>
+                                </div>
+                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Pengolahan & Manajemen Database Statistik</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                                    Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel untuk analisis daerah.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template entry -->
+                    <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-5 text-center">
+                        <i class="fa-solid fa-plus-circle text-2xl text-slate-400 mb-2"></i>
+                        <p class="text-sm font-bold text-slate-600 dark:text-slate-300">Tambahkan sertifikasi berikutnya di sini</p>
+                        <p class="text-xs text-slate-400 mt-1">Isi nama sertifikat, penerbit, tahun, nomor sertifikat, dan deskripsi.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -486,7 +685,7 @@
     <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
             <p>© 2026 Portofolio Mitra Statistik BPS Kabupaten Demak. All rights reserved.</p>
-            <p class="text-[11px] text-slate-500">Website portofolio ini dikembangkan secara independen sebagai showcase kompetensi Enumerator & Admin Data.</p>
+            <p class="text-[11px] text-slate-500">Website portofolio ini dikembangkan secara independen sebagai showcase kompetensi Enumerator, Admin Data, dokumentasi kegiatan, dan publikasi.</p>
         </div>
     </footer>
 
@@ -627,6 +826,32 @@
                 method: "Web Portal BPS",
                 status: "Selesai 100%",
                 desc: "Pengumpulan data bulanan indikator pariwisata dan okupansi hotel di Demak."
+            }
+        ];
+
+        // Data Sertifikasi / Penghargaan
+        // Tambahkan objek baru dengan format yang sama untuk memperluas daftar sertifikasi.
+        const certificationData = [
+            {
+                title: "Petugas Pendataan Sensus Pertanian 2023 (ST2023)",
+                category: "Sertifikat Petugas",
+                year: "2023",
+                issuer: "BPS Kabupaten Demak",
+                description: "Sertifikat atas kelulusan pelatihan dan pelaksanaan pendataan ST2023."
+            },
+            {
+                title: "Mitra Statistik Terbaik Kategori Akurasi Data 2022",
+                category: "Penghargaan",
+                year: "2022",
+                issuer: "BPS Kabupaten Demak",
+                description: "Penghargaan atas keakuratan entri data Susenas dan minim perbaikan."
+            },
+            {
+                title: "Pengolahan & Manajemen Database Statistik",
+                category: "Pelatihan IT",
+                year: "-",
+                issuer: "Pelatihan / Lembaga Penerbit",
+                description: "Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel."
             }
         ];
 
