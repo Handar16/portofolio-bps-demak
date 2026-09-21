@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#003366">
+    <meta name="description" content="Portofolio Handar Arfianto - Enumerator dan Admin Data">
     <title>Portofolio Enumerator & Admin Data BPS Kab. Demak</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -60,6 +62,8 @@
                     <a href="#beranda" class="text-bps-blue dark:text-slate-200 hover:text-bps-orange dark:hover:text-bps-orange transition">Beranda</a>
                     <a href="#profil" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Profil & Keahlian</a>
                     <a href="#portofolio" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sensus & Survei</a>
+                    <a href="#portofolio" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Kegiatan</a>
+                    <a href="#dokumentasi" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Dokumentasi & Publikasi</a>
                     <a href="#database" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition flex items-center gap-1">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-bps-orange opacity-75"></span>
@@ -67,8 +71,7 @@
                         </span>
                         Database Data
                     </a>
-                    <a href="#dokumentasi" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Dokumentasi & Publikasi</a>
-                    <a href="#sertifikat" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sertifikasi</a>
+                    <a href="#sertifikat" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sertifikat</a>
                     <a href="#kontak" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Kontak</a>
                 </nav>
 
@@ -91,9 +94,10 @@
             <a href="#beranda" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Beranda</a>
             <a href="#profil" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Profil & Keahlian</a>
             <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sensus & Survei</a>
-            <a href="#database" class="block py-2 text-bps-orange font-semibold">Database Data (CRUD)</a>
+            <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kegiatan</a>
             <a href="#dokumentasi" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Dokumentasi & Publikasi</a>
-            <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikasi</a>
+            <a href="#database" class="block py-2 text-bps-orange font-semibold">Database Data (CRUD)</a>
+            <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikat & Prestasi</a>
             <a href="#kontak" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kontak</a>
         </div>
     </header>
@@ -127,10 +131,6 @@
                         <a href="#database" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-bps-orange hover:bg-orange-600 text-white font-semibold text-sm shadow-lg shadow-orange-500/20 hover:shadow-xl transition-all flex items-center justify-center gap-2">
                             <i class="fa-solid fa-database"></i>
                             Kelola Database Data
-                        </a>
-                        <a href="#dokumentasi" class="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-sm hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-images"></i>
-                            Dokumentasi & Publikasi
                         </a>
                     </div>
                 </div>
@@ -276,18 +276,29 @@
     <!-- Portfolio Sensus & Survei Section -->
     <section id="portofolio" class="py-16 bg-slate-50 dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-8">
-                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Rekam Jejak Lapangan</h2>
-                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Portofolio Sensus & Survei BPS</p>
-                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div class="text-center md:text-left max-w-3xl">
+                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Rekam Jejak Lapangan</h2>
+                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Portofolio Sensus & Survei BPS</p>
+                    <div class="w-16 h-1 bg-bps-orange md:mx-0 mx-auto mt-3 rounded-full"></div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">Data kegiatan dikelola dari Google Sheets.</p>
+                </div>
+                <div class="flex items-center gap-2 justify-center">
+                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold">
+                        <i class="fa-solid fa-rotate mr-1"></i> Muat Ulang
+                    </button>
+                    <button onclick="openKegiatanModal()" class="px-4 py-2.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white text-xs font-bold">
+                        <i class="fa-solid fa-plus mr-1"></i> Tambah Kegiatan
+                    </button>
+                </div>
             </div>
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
-                <button onclick="filterPortfolio('all')" class="portfolio-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-bps-blue text-white shadow-md transition">Semua Kegiatan</button>
-                <button onclick="filterPortfolio('sensus')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Sensus Nasional</button>
-                <button onclick="filterPortfolio('sosial')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Survei Sosial Ekonomi</button>
-                <button onclick="filterPortfolio('produksi')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Pertanian & Industri</button>
+                <button onclick="filterPortfolio('all', this)" class="portfolio-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-bps-blue text-white shadow-md transition">Semua Kegiatan</button>
+                <button onclick="filterPortfolio('sensus', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Sensus Nasional</button>
+                <button onclick="filterPortfolio('sosial', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Survei Sosial Ekonomi</button>
+                <button onclick="filterPortfolio('produksi', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Pertanian & Industri</button>
             </div>
 
             <!-- Portfolio Cards Grid -->
@@ -402,238 +413,43 @@
         </div>
     </section>
 
-
-    <!-- Dokumentasi & Publikasi Section -->
+    <!-- Dokumentasi & Publikasi -->
     <section id="dokumentasi" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-10">
-                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Dokumentasi Kegiatan</h2>
-                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Dokumentasi & Publikasi yang Dilaksanakan</p>
-                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
-                    Kumpulan dokumentasi kegiatan lapangan, pengolahan data, pelatihan, serta publikasi hasil pekerjaan.
-                    Data pada bagian ini dapat disesuaikan dengan dokumentasi dan tautan publikasi yang tersedia.
-                </p>
-            </div>
-
-            <!-- Activity Documentation -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
-                    <div class="h-40 bg-gradient-to-br from-bps-blue to-blue-900 flex items-center justify-center text-white">
-                        <i class="fa-solid fa-clipboard-check text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Pendataan Lapangan</span>
-                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Sensus Pertanian 2023</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                            Dokumentasi kegiatan pendataan unit usaha pertanian, wawancara responden, dan proses validasi hasil pendataan.
-                        </p>
-                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar"></i> 2023
-                        </div>
-                    </div>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Dokumentasi & Publikasi</h2>
+                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Dokumentasi Kegiatan & Publikasi</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Data dikelola dari Google Sheets sehingga dapat ditambah dan diedit tanpa mengubah HTML.</p>
                 </div>
-
-                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
-                    <div class="h-40 bg-gradient-to-br from-bps-orange to-orange-700 flex items-center justify-center text-white">
-                        <i class="fa-solid fa-people-group text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Survei</span>
-                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Susenas & Sakernas</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                            Dokumentasi proses wawancara, pemutakhiran data, pemeriksaan isian, dan koordinasi kegiatan survei.
-                        </p>
-                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar"></i> 2023–2026
-                        </div>
-                    </div>
-                </div>
-
-                <div class="group rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 hover:shadow-lg transition-all">
-                    <div class="h-40 bg-gradient-to-br from-bps-green to-green-800 flex items-center justify-center text-white">
-                        <i class="fa-solid fa-laptop-code text-5xl opacity-90 group-hover:scale-110 transition-transform"></i>
-                    </div>
-                    <div class="p-5">
-                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-bps-orange">Pengolahan Data</span>
-                        <h3 class="font-bold text-slate-900 dark:text-white mt-2">Validasi & Administrasi Data</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                            Dokumentasi pengolahan, pemeriksaan kelengkapan, validasi, pembersihan data, dan pengelolaan database.
-                        </p>
-                        <div class="mt-4 text-[11px] text-slate-400 flex items-center gap-2">
-                            <i class="fa-solid fa-calendar"></i> Berkelanjutan
-                        </div>
-                    </div>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"><i class="fa-solid fa-rotate mr-1"></i> Muat Ulang</button>
+                    <button onclick="openDocumentationModal()" class="px-4 py-2.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white text-xs font-bold"><i class="fa-solid fa-plus mr-1"></i> Tambah Dokumentasi</button>
                 </div>
             </div>
-
-            <!-- Publication List -->
-            <div class="bg-slate-50 dark:bg-slate-950/70 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-7">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-                    <div>
-                        <h3 class="text-lg font-extrabold text-slate-900 dark:text-white">
-                            <i class="fa-solid fa-newspaper text-bps-orange mr-2"></i>Daftar Publikasi & Output
-                        </h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                            Catatan hasil pekerjaan yang dapat ditautkan ke dokumen atau halaman publikasi.
-                        </p>
-                    </div>
-                    <span class="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-950 text-bps-blue dark:text-blue-300 text-[10px] font-bold">
-                        PORTOFOLIO
-                    </span>
-                </div>
-
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead>
-                            <tr class="text-[10px] uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-800">
-                                <th class="py-3 pr-4">Tahun</th>
-                                <th class="py-3 pr-4">Kegiatan / Output</th>
-                                <th class="py-3 pr-4">Peran</th>
-                                <th class="py-3 pr-4">Jenis</th>
-                                <th class="py-3 text-right">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-xs divide-y divide-slate-200 dark:divide-slate-800">
-                            <tr>
-                                <td class="py-4 pr-4 font-semibold">2023</td>
-                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Dokumentasi Sensus Pertanian 2023</td>
-                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Petugas Pendataan Lapangan</td>
-                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300">Dokumentasi</span></td>
-                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
-                            </tr>
-                            <tr>
-                                <td class="py-4 pr-4 font-semibold">2024</td>
-                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Dokumentasi Susenas & Sakernas</td>
-                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Enumerator & Validasi</td>
-                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-orange-50 dark:bg-orange-950 text-bps-orange">Dokumentasi</span></td>
-                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
-                            </tr>
-                            <tr>
-                                <td class="py-4 pr-4 font-semibold">2025</td>
-                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Pemutakhiran Direktori & Geotagging</td>
-                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Admin Data & Geotagging</td>
-                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-green-50 dark:bg-green-950 text-bps-green">Output Data</span></td>
-                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Tersedia</span></td>
-                            </tr>
-                            <tr>
-                                <td class="py-4 pr-4 font-semibold">2026</td>
-                                <td class="py-4 pr-4 font-semibold text-slate-900 dark:text-white">Portofolio Digital Enumerator & Admin Data</td>
-                                <td class="py-4 pr-4 text-slate-500 dark:text-slate-400">Pengembang / Admin</td>
-                                <td class="py-4 pr-4"><span class="px-2 py-1 rounded bg-purple-50 dark:bg-purple-950 text-purple-600 dark:text-purple-300">Publikasi</span></td>
-                                <td class="py-4 text-right"><span class="text-bps-green font-bold">Aktif</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div id="documentationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-slate-400">Memuat dokumentasi...</div>
             </div>
         </div>
     </section>
 
-    <!-- Sertifikasi & Prestasi -->
+    <!-- Sertifikat & Prestasi -->
     <section id="sertifikat" class="py-16 bg-slate-50 dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto mb-12">
-                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
-                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Daftar Sertifikasi & Penghargaan</p>
-                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
-                <p class="text-sm text-slate-500 dark:text-slate-400 mt-4">
-                    Daftar sertifikasi, pelatihan, dan penghargaan yang tercantum dalam portofolio.
-                </p>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
+                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Sertifikat & Penghargaan</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Data sertifikasi dan penghargaan dikelola melalui Google Sheets.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"><i class="fa-solid fa-rotate mr-1"></i> Muat Ulang</button>
+                    <button onclick="openCertificateModal()" class="px-4 py-2.5 rounded-xl bg-bps-orange hover:bg-orange-600 text-white text-xs font-bold"><i class="fa-solid fa-plus mr-1"></i> Tambah Sertifikat</button>
+                </div>
             </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <!-- Summary -->
-                <div class="lg:col-span-4">
-                    <div class="bg-bps-gradient rounded-2xl p-7 text-white shadow-lg sticky top-24">
-                        <div class="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center mb-5">
-                            <i class="fa-solid fa-certificate text-2xl text-bps-orange"></i>
-                        </div>
-                        <p class="text-xs uppercase tracking-wider font-bold text-slate-300">Rekam Kompetensi</p>
-                        <p class="text-4xl font-extrabold mt-1">3+</p>
-                        <p class="text-sm text-slate-300 mt-2 leading-relaxed">
-                            Sertifikasi, pelatihan, dan penghargaan yang dapat ditampilkan sebagai bukti pengalaman profesional.
-                        </p>
-                        <div class="mt-6 pt-5 border-t border-white/10 space-y-3 text-xs">
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-award text-bps-orange"></i>
-                                <span>Sertifikat petugas pendataan</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-laptop-code text-bps-orange"></i>
-                                <span>Pelatihan pengolahan data</span>
-                            </div>
-                            <div class="flex items-center gap-3">
-                                <i class="fa-solid fa-star text-bps-orange"></i>
-                                <span>Penghargaan kinerja</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Certification List -->
-                <div class="lg:col-span-8 space-y-4">
-                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <div class="flex gap-4">
-                            <div class="shrink-0 w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300 flex items-center justify-center">
-                                <i class="fa-solid fa-award text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex flex-wrap justify-between gap-2">
-                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-blue-100 text-bps-blue dark:bg-blue-900 dark:text-blue-200">SERTIFIKAT PETUGAS</span>
-                                    <span class="text-[10px] font-semibold text-slate-400">2023</span>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Petugas Pendataan Sensus Pertanian 2023 (ST2023)</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                                    Diterbitkan oleh BPS Kabupaten Demak atas kelulusan pelatihan dan pelaksanaan pendataan ST2023.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <div class="flex gap-4">
-                            <div class="shrink-0 w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950 text-bps-orange flex items-center justify-center">
-                                <i class="fa-solid fa-star text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex flex-wrap justify-between gap-2">
-                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-orange-100 text-bps-orange dark:bg-orange-900 dark:text-orange-200">PENGHARGAAN</span>
-                                    <span class="text-[10px] font-semibold text-slate-400">2022</span>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Mitra Statistik Terbaik Kategori Akurasi Data 2022</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                                    Penghargaan atas keakuratan entri data Susenas dan minim perbaikan dari Penanggung Jawab Teknis.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <div class="flex gap-4">
-                            <div class="shrink-0 w-12 h-12 rounded-xl bg-green-50 dark:bg-green-950 text-bps-green flex items-center justify-center">
-                                <i class="fa-solid fa-certificate text-xl"></i>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex flex-wrap justify-between gap-2">
-                                    <span class="text-[10px] font-extrabold px-2 py-1 rounded bg-green-100 text-bps-green dark:bg-green-900 dark:text-green-200">PELATIHAN IT</span>
-                                    <span class="text-[10px] font-semibold text-slate-400">-</span>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mt-2">Pengolahan & Manajemen Database Statistik</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
-                                    Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel untuk analisis daerah.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Template entry -->
-                    <div class="border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl p-5 text-center">
-                        <i class="fa-solid fa-plus-circle text-2xl text-slate-400 mb-2"></i>
-                        <p class="text-sm font-bold text-slate-600 dark:text-slate-300">Tambahkan sertifikasi berikutnya di sini</p>
-                        <p class="text-xs text-slate-400 mt-1">Isi nama sertifikat, penerbit, tahun, nomor sertifikat, dan deskripsi.</p>
-                    </div>
-                </div>
+            <div id="certificateGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="col-span-full text-center py-12 text-slate-400">Memuat sertifikasi...</div>
+            </div>
             </div>
         </div>
     </section>
@@ -685,9 +501,61 @@
     <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
             <p>© 2026 Portofolio Mitra Statistik BPS Kabupaten Demak. All rights reserved.</p>
-            <p class="text-[11px] text-slate-500">Website portofolio ini dikembangkan secara independen sebagai showcase kompetensi Enumerator, Admin Data, dokumentasi kegiatan, dan publikasi.</p>
+            <p class="text-[11px] text-slate-500">Website portofolio ini dikembangkan secara independen sebagai showcase kompetensi Enumerator & Admin Data.</p>
         </div>
     </footer>
+
+    <!-- Modal Kegiatan -->
+    <div id="kegiatanModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 p-4">
+        <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6">
+            <div class="flex items-center justify-between mb-5">
+                <h3 id="kegiatanModalTitle" class="text-xl font-extrabold text-slate-900 dark:text-white">Tambah Kegiatan</h3>
+                <button type="button" onclick="closeKegiatanModal()" class="text-slate-400 hover:text-red-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form onsubmit="saveKegiatan(event)" class="space-y-4">
+                <input id="kegiatanEditId" type="hidden">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="sm:col-span-2"><label class="block text-xs font-bold mb-1">Judul Kegiatan</label><input id="kegiatanTitle" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                    <div><label class="block text-xs font-bold mb-1">Kategori</label><select id="kegiatanCategory" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"><option value="sensus">Sensus Nasional</option><option value="sosial">Survei Sosial Ekonomi</option><option value="produksi">Pertanian & Industri</option></select></div>
+                    <div><label class="block text-xs font-bold mb-1">Tahun</label><input id="kegiatanYear" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="2026 atau 2025 - 2026"></div>
+                    <div><label class="block text-xs font-bold mb-1">Peran</label><input id="kegiatanRole" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                    <div><label class="block text-xs font-bold mb-1">Target / Responden</label><input id="kegiatanRespondents" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                    <div><label class="block text-xs font-bold mb-1">Metode</label><input id="kegiatanMethod" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                    <div><label class="block text-xs font-bold mb-1">Status</label><input id="kegiatanStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="Selesai 100%"></div>
+                    <div class="sm:col-span-2"><label class="block text-xs font-bold mb-1">Deskripsi</label><textarea id="kegiatanDescription" required rows="4" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></textarea></div>
+                </div>
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
+                    <button type="button" onclick="closeKegiatanModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Dokumentasi & Sertifikasi -->
+    <div id="sheetItemModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
+            <div class="p-5 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <h3 id="sheetModalTitle" class="font-bold text-slate-900 dark:text-white">Tambah Item</h3>
+                <button onclick="closeSheetModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="sheetItemForm" onsubmit="saveSheetItem(event)" class="p-6 space-y-4 text-xs">
+                <input type="hidden" id="sheetEditId"><input type="hidden" id="sheetItemType">
+                <div><label class="block font-semibold mb-1">Judul</label><input id="sheetTitle" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block font-semibold mb-1">Kategori / Jenis</label><input id="sheetCategory" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                    <div><label class="block font-semibold mb-1">Tahun</label><input id="sheetYear" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
+                </div>
+                <div><label class="block font-semibold mb-1">Deskripsi</label><textarea id="sheetDescription" rows="4" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></textarea></div>
+                <div><label class="block font-semibold mb-1">Link / URL (opsional)</label><input id="sheetUrl" type="url" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="https://..."></div>
+                <div><label class="block font-semibold mb-1">URL Gambar (opsional)</label><input id="sheetImage" type="url" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="https://...jpg"></div>
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
+                    <button type="button" onclick="closeSheetModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Modal Entry Data (Add / Edit) -->
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
@@ -765,95 +633,123 @@
     </div>
 
     <script>
-        // Data Portofolio Sensus/Survei
-        const portfolioData = [
-            {
-                title: "Sensus Pertanian 2023 (ST2023)",
-                category: "sensus",
-                year: "2023",
-                role: "Petugas Pendataan Lapangan (PPL)",
-                respondents: "250 UTP",
-                method: "CAPI (ST2023 App)",
-                status: "Selesai 100%",
-                desc: "Pendataan Unit Usaha Pertanian Perorangan di wilayah Kecamatan Wonosalam & Demak Kota."
-            },
-            {
-                title: "Survei Sosial Ekonomi Nasional (Susenas)",
-                category: "sosial",
-                year: "2024",
-                role: "Enumerator & Validasi",
-                respondents: "120 Rumah Tangga",
-                method: "CAPI (FASIH)",
-                status: "Selesai 100%",
-                desc: "Mengumpulkan data konsumsi/pengeluaran dan modul ketahanan pangan masyarakat."
-            },
-            {
-                title: "Survei Angkatan Kerja Nasional (Sakernas)",
-                category: "sosial",
-                year: "2023 - 2024",
-                role: "Petugas Pendataan Lapangan",
-                respondents: "180 Responden",
-                method: "CAPI / PAPI",
-                status: "Selesai 100%",
-                desc: "Pendataan indikator ketenagakerjaan, tingkat pengangguran terbuka di Kab. Demak."
-            },
-            {
-                title: "Pemutakhiran Sensus Ekonomi (SE2026 Prep)",
-                category: "sensus",
-                year: "2025",
-                role: "Admin Data & Geotagging",
-                respondents: "310 Usaha/Perusahaan",
-                method: "CAPI & GIS Mapping",
-                status: "Selesai 100%",
-                desc: "Pemutakhiran direktori perusahaan dan geotagging bangunan usaha berbasis Wilkerstat."
-            },
-            {
-                title: "Survei Ubinan Padi & Jagung (KSA)",
-                category: "produksi",
-                year: "2023 - 2025",
-                role: "Petugas Ubinan Lapangan",
-                respondents: "45 Titik Sampel",
-                method: "PAPI & App KSA",
-                status: "Rutin Berjalan",
-                desc: "Pengukuran riil produktivitas tanaman pangan kuadrat ubinan di lahan pertanian Demak."
-            },
-            {
-                title: "Survei Tingkat Penghunian Kamar Hotel (VHTS)",
-                category: "produksi",
-                year: "2024",
-                role: "Admin Entry Data",
-                respondents: "28 Akomodasi",
-                method: "Web Portal BPS",
-                status: "Selesai 100%",
-                desc: "Pengumpulan data bulanan indikator pariwisata dan okupansi hotel di Demak."
-            }
-        ];
+        /* GOOGLE SHEETS CONTENT MANAGER
+           Sheet: Dokumentasi dan Sertifikasi
+           Kolom: ID | Judul | Kategori | Tahun | Deskripsi | URL | Gambar | Aktif
+           Ganti URL berikut dengan URL Web App Google Apps Script. */
+        // ============================================================
+        // KONFIGURASI GITHUB PAGES + GOOGLE SHEETS
+        // Tempel URL Web App Google Apps Script di antara tanda kutip.
+        // Contoh: https://script.google.com/macros/s/XXXXXXXX/exec
+        // ============================================================
+        const GOOGLE_SHEETS_API_URL = 'GANTI_DENGAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT';
+        let sheetContent = { Kegiatan: [], Dokumentasi: [], Sertifikasi: [] };
 
-        // Data Sertifikasi / Penghargaan
-        // Tambahkan objek baru dengan format yang sama untuk memperluas daftar sertifikasi.
-        const certificationData = [
-            {
-                title: "Petugas Pendataan Sensus Pertanian 2023 (ST2023)",
-                category: "Sertifikat Petugas",
-                year: "2023",
-                issuer: "BPS Kabupaten Demak",
-                description: "Sertifikat atas kelulusan pelatihan dan pelaksanaan pendataan ST2023."
-            },
-            {
-                title: "Mitra Statistik Terbaik Kategori Akurasi Data 2022",
-                category: "Penghargaan",
-                year: "2022",
-                issuer: "BPS Kabupaten Demak",
-                description: "Penghargaan atas keakuratan entri data Susenas dan minim perbaikan."
-            },
-            {
-                title: "Pengolahan & Manajemen Database Statistik",
-                category: "Pelatihan IT",
-                year: "-",
-                issuer: "Pelatihan / Lembaga Penerbit",
-                description: "Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel."
+        function escapeHtml(value = '') {
+            return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+        }
+
+        async function loadSheetContent() {
+            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) { renderKegiatan(); renderSheetContent(); return; }
+            try {
+                const res = await fetch(GOOGLE_SHEETS_API_URL + '?action=getAll', {cache:'no-store'});
+                const data = await res.json();
+                sheetContent.Kegiatan = Array.isArray(data.Kegiatan) ? data.Kegiatan : [];
+                sheetContent.Dokumentasi = Array.isArray(data.Dokumentasi) ? data.Dokumentasi : [];
+                sheetContent.Sertifikasi = Array.isArray(data.Sertifikasi) ? data.Sertifikasi : [];
+                renderKegiatan();
+                renderSheetContent();
+            } catch (err) {
+                console.error(err); renderSheetContent();
+                alert('Google Sheets belum dapat dimuat. Pastikan URL Web App dan aksesnya benar.');
             }
-        ];
+        }
+
+        function renderSheetContent() {
+            const docs = document.getElementById('documentationGrid');
+            const certs = document.getElementById('certificateGrid');
+            if (docs) docs.innerHTML = sheetContent.Dokumentasi.length ? sheetContent.Dokumentasi.map(x => sheetCard(x,'Dokumentasi')).join('') : emptySheetState('Belum ada dokumentasi/publikasi.');
+            if (certs) certs.innerHTML = sheetContent.Sertifikasi.length ? sheetContent.Sertifikasi.map(x => sheetCard(x,'Sertifikasi')).join('') : emptySheetState('Belum ada sertifikat atau penghargaan.');
+        }
+
+        function emptySheetState(text) {
+            return `<div class="col-span-full text-center py-12 text-slate-400"><i class="fa-regular fa-folder-open text-2xl mb-3"></i><p>${escapeHtml(text)}</p></div>`;
+        }
+
+        function safeUrl(value) {
+            const v = String(value || '').trim();
+            if (!v) return '';
+            try {
+                const u = new URL(v, window.location.href);
+                return ['http:', 'https:'].includes(u.protocol) ? u.href : '';
+            } catch (_) { return ''; }
+        }
+
+        function sheetCard(item, type) {
+            const itemId = encodeURIComponent(String(item.ID || ''));
+            const imageUrl = safeUrl(item.Gambar);
+            const documentUrl = safeUrl(item.URL);
+            const image = imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(item.Judul)}" class="w-full h-40 object-cover rounded-xl mb-4" onerror="this.style.display='none'">` : '';
+            const link = documentUrl ? `<a href="${escapeHtml(documentUrl)}" target="_blank" rel="noopener" class="text-bps-blue dark:text-blue-300 font-semibold hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Lihat Dokumen</a>` : '<span></span>';
+            return `<article class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition">${image}
+                <div class="flex justify-between items-start gap-2 mb-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-bps-blue dark:bg-blue-950 dark:text-blue-300">${escapeHtml(item.Tahun||'')}</span><span class="text-[10px] font-bold text-bps-orange">${escapeHtml(item.Kategori||type)}</span></div>
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">${escapeHtml(item.Judul||'')}</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">${escapeHtml(item.Deskripsi||'')}</p>
+                <div class="flex items-center justify-between mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">${link}
+                    <div class="flex gap-3"><button onclick="editSheetItem('${type}',decodeURIComponent('${itemId}'))" class="text-blue-600" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteSheetItem('${type}',decodeURIComponent('${itemId}'))" class="text-red-600" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>
+                </div></article>`;
+        }
+
+        function openDocumentationModal(){ openSheetModal('Dokumentasi'); }
+        function openCertificateModal(){ openSheetModal('Sertifikasi'); }
+
+        function openSheetModal(type,item=null){
+            document.getElementById('sheetItemType').value=type; document.getElementById('sheetEditId').value=item?.ID||'';
+            document.getElementById('sheetModalTitle').innerText=(item?'Edit ':'Tambah ')+type;
+            document.getElementById('sheetTitle').value=item?.Judul||''; document.getElementById('sheetCategory').value=item?.Kategori||'';
+            document.getElementById('sheetYear').value=item?.Tahun||''; document.getElementById('sheetDescription').value=item?.Deskripsi||'';
+            document.getElementById('sheetUrl').value=item?.URL||''; document.getElementById('sheetImage').value=item?.Gambar||'';
+            document.getElementById('sheetItemModal').classList.remove('hidden'); document.getElementById('sheetItemModal').classList.add('flex');
+        }
+        function closeSheetModal(){document.getElementById('sheetItemModal').classList.add('hidden');document.getElementById('sheetItemModal').classList.remove('flex');}
+        function editSheetItem(type,id){const item=sheetContent[type].find(x=>String(x.ID)===String(id));if(item)openSheetModal(type,item);}
+
+        async function saveSheetItem(e){
+            e.preventDefault();
+            if(GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')){alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');return;}
+            const type=document.getElementById('sheetItemType').value;
+            const payload={action:document.getElementById('sheetEditId').value?'update':'create',sheet:type,
+                ID:document.getElementById('sheetEditId').value||('ID-'+Date.now()),Judul:document.getElementById('sheetTitle').value.trim(),
+                Kategori:document.getElementById('sheetCategory').value.trim(),Tahun:document.getElementById('sheetYear').value.trim(),
+                Deskripsi:document.getElementById('sheetDescription').value.trim(),URL:document.getElementById('sheetUrl').value.trim(),
+                Gambar:document.getElementById('sheetImage').value.trim(),Aktif:'TRUE'};
+            try{const r=await fetch(GOOGLE_SHEETS_API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});const result=await r.json();if(!result.success)throw new Error(result.message||'Gagal menyimpan');closeSheetModal();await loadSheetContent();}
+            catch(err){alert('Gagal menyimpan ke Google Sheets: '+err.message);}
+        }
+
+        async function deleteSheetItem(type,id){
+            if(!confirm('Hapus item ini dari Google Sheets?'))return;
+            if(GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')){alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');return;}
+            try{const r=await fetch(GOOGLE_SHEETS_API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',sheet:type,ID:id})});const result=await r.json();if(!result.success)throw new Error(result.message||'Gagal menghapus');await loadSheetContent();}
+            catch(err){alert('Gagal menghapus dari Google Sheets: '+err.message);}
+        }
+
+        // Data Portofolio Sensus/Survei
+        let portfolioData = [];
+
+        function mapKegiatan(item) {
+            return {
+                ID: item.ID || '',
+                title: item.Judul || '',
+                category: item.Kategori || 'sensus',
+                year: item.Tahun || '',
+                role: item.Peran || '',
+                respondents: item.Responden || '',
+                method: item.Metode || '',
+                status: item.Status || '',
+                desc: item.Deskripsi || ''
+            };
+        }
 
         // Initial Interactive Table Data (Simulasi Database BPS)
         let sampleDatabase = [
@@ -882,28 +778,32 @@
                         <div>
                             <div class="flex justify-between items-start gap-2 mb-3">
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-bps-blue dark:bg-blue-950 dark:text-blue-300">
-                                    ${item.year}
+                                    ${escapeHtml(item.year)}
                                 </span>
                                 <span class="text-xs font-semibold text-bps-green flex items-center gap-1">
-                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${item.status}
+                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${escapeHtml(item.status)}
                                 </span>
                             </div>
-                            <h3 class="font-bold text-slate-900 dark:text-white text-base mb-2">${item.title}</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">${item.desc}</p>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-base mb-2">${escapeHtml(item.title)}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">${escapeHtml(item.desc)}</p>
                         </div>
 
                         <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs">
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Peran:</span>
-                                <span class="font-semibold">${item.role}</span>
+                                <span class="font-semibold">${escapeHtml(item.role)}</span>
                             </div>
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Target/Cakupan:</span>
-                                <span class="font-semibold">${item.respondents}</span>
+                                <span class="font-semibold">${escapeHtml(item.respondents)}</span>
                             </div>
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Metode:</span>
-                                <span class="font-semibold text-bps-orange">${item.method}</span>
+                                <span class="font-semibold text-bps-orange">${escapeHtml(item.method)}</span>
+                            </div>
+                            <div class="flex justify-end gap-3 pt-3 mt-2 border-t border-slate-100 dark:border-slate-800">
+                                <button onclick="editKegiatan('${escapeHtml(item.ID)}')" class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button onclick="deleteKegiatan('${escapeHtml(item.ID)}')" class="text-red-600 hover:text-red-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
@@ -912,15 +812,101 @@
             });
         }
 
+        function renderKegiatan() {
+            portfolioData = sheetContent.Kegiatan.filter(x => String(x.Aktif).toUpperCase() !== 'FALSE').map(mapKegiatan);
+            renderPortfolio('all');
+        }
+
+        function openKegiatanModal(item = null) {
+            document.getElementById('kegiatanEditId').value = item?.ID || '';
+            document.getElementById('kegiatanModalTitle').innerText = item ? 'Edit Kegiatan' : 'Tambah Kegiatan';
+            document.getElementById('kegiatanTitle').value = item?.Judul || '';
+            document.getElementById('kegiatanCategory').value = item?.Kategori || 'sensus';
+            document.getElementById('kegiatanYear').value = item?.Tahun || '';
+            document.getElementById('kegiatanRole').value = item?.Peran || '';
+            document.getElementById('kegiatanRespondents').value = item?.Responden || '';
+            document.getElementById('kegiatanMethod').value = item?.Metode || '';
+            document.getElementById('kegiatanStatus').value = item?.Status || '';
+            document.getElementById('kegiatanDescription').value = item?.Deskripsi || '';
+            document.getElementById('kegiatanModal').classList.remove('hidden');
+            document.getElementById('kegiatanModal').classList.add('flex');
+        }
+
+        function closeKegiatanModal() {
+            document.getElementById('kegiatanModal').classList.add('hidden');
+            document.getElementById('kegiatanModal').classList.remove('flex');
+        }
+
+        function editKegiatan(id) {
+            const item = sheetContent.Kegiatan.find(x => String(x.ID) === String(id));
+            if (item) openKegiatanModal(item);
+        }
+
+        async function saveKegiatan(e) {
+            e.preventDefault();
+            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) {
+                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
+                return;
+            }
+            const id = document.getElementById('kegiatanEditId').value;
+            const payload = {
+                action: id ? 'update' : 'create',
+                sheet: 'Kegiatan',
+                ID: id || ('KEG-' + Date.now()),
+                Judul: document.getElementById('kegiatanTitle').value.trim(),
+                Kategori: document.getElementById('kegiatanCategory').value,
+                Tahun: document.getElementById('kegiatanYear').value.trim(),
+                Peran: document.getElementById('kegiatanRole').value.trim(),
+                Responden: document.getElementById('kegiatanRespondents').value.trim(),
+                Metode: document.getElementById('kegiatanMethod').value.trim(),
+                Status: document.getElementById('kegiatanStatus').value.trim(),
+                Deskripsi: document.getElementById('kegiatanDescription').value.trim(),
+                Aktif: 'TRUE'
+            };
+            try {
+                const r = await fetch(GOOGLE_SHEETS_API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await r.json();
+                if (!result.success) throw new Error(result.message || 'Gagal menyimpan');
+                closeKegiatanModal();
+                await loadSheetContent();
+            } catch (err) {
+                alert('Gagal menyimpan kegiatan ke Google Sheets: ' + err.message);
+            }
+        }
+
+        async function deleteKegiatan(id) {
+            if (!confirm('Hapus kegiatan ini dari Google Sheets?')) return;
+            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) {
+                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
+                return;
+            }
+            try {
+                const r = await fetch(GOOGLE_SHEETS_API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'text/plain;charset=utf-8'},
+                    body: JSON.stringify({action:'delete', sheet:'Kegiatan', ID:id})
+                });
+                const result = await r.json();
+                if (!result.success) throw new Error(result.message || 'Gagal menghapus');
+                await loadSheetContent();
+            } catch (err) {
+                alert('Gagal menghapus kegiatan dari Google Sheets: ' + err.message);
+            }
+        }
+
         // Filter Portfolio Active State
-        function filterPortfolio(category) {
+        function filterPortfolio(category, sourceButton = null) {
             document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
                 btn.classList.remove('bg-bps-blue', 'text-white', 'shadow-md');
                 btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
             });
 
-            event.target.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
-            event.target.classList.add('bg-bps-blue', 'text-white', 'shadow-md');
+            const target = sourceButton || document.querySelector(`.portfolio-filter-btn[onclick*="'${category}'"]`);
+            if (target) { target.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300'); target.classList.add('bg-bps-blue', 'text-white', 'shadow-md'); }
 
             renderPortfolio(category);
         }
@@ -1143,6 +1129,7 @@
         window.onload = function() {
             renderPortfolio('all');
             renderTable();
+            loadSheetContent();
         };
     </script>
 </body>
