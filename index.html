@@ -23,6 +23,31 @@
   .progress>span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#2563eb,#0ea5e9)}
   .fade-in{animation:fade .45s ease both}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 </style>
+
+<style>
+/* CONTACT PAGE */
+.contact-section{padding:72px 0}
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;margin-top:28px}
+.contact-card{border:1px solid var(--border,#e5e7eb);background:var(--card,#fff);border-radius:22px;padding:28px;box-shadow:0 10px 30px rgba(15,23,42,.06)}
+.contact-card h3{margin:0 0 8px}
+.contact-card>p{opacity:.75;line-height:1.7}
+.contact-list{display:grid;gap:12px;margin-top:22px}
+.contact-item{display:flex;gap:13px;align-items:center;padding:14px;border-radius:15px;background:var(--surface,#f8fafc)}
+.contact-icon{width:40px;height:40px;min-width:40px;border-radius:11px;display:grid;place-items:center;background:var(--primary,#2563eb);color:#fff;font-size:12px;font-weight:800}
+.contact-item strong{display:block;margin-bottom:3px}
+.contact-item a{color:inherit;text-decoration:none;word-break:break-word}
+.contact-item a:hover{text-decoration:underline}
+.contact-form{display:grid;gap:15px;margin-top:20px}
+.contact-form label{display:block;font-weight:650;font-size:.93rem}
+.contact-form input,.contact-form textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:12px 13px;border:1px solid var(--border,#d1d5db);border-radius:11px;background:var(--input,#fff);color:inherit;font:inherit;outline:none}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--primary,#2563eb);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.contact-form textarea{min-height:125px;resize:vertical}
+.contact-submit{border:0;border-radius:11px;padding:12px 17px;background:var(--primary,#2563eb);color:#fff;font-weight:700;cursor:pointer;font:inherit}
+.contact-submit:hover{filter:brightness(.95)}
+.contact-note{font-size:.82rem;opacity:.65;margin:0}
+@media(max-width:800px){.contact-grid{grid-template-columns:1fr}.contact-section{padding:55px 0}}
+</style>
+
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100">
 <div class="min-h-screen">
@@ -35,7 +60,9 @@
       <a href="#lapangan" class="hover:text-blue-600">Hasil Lapangan</a>
       <a href="#dokumentasi" class="hover:text-blue-600">Dokumentasi</a>
       <a href="#sertifikasi" class="hover:text-blue-600">Sertifikasi</a>
-    </nav>
+    
+<a href="#kontak">Kontak</a>
+</nav>
     <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center" aria-label="Ganti tema">◐</button>
   </div>
 </header>
@@ -51,8 +78,10 @@
         <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">Handar Arfianto</h1>
         <p class="mt-4 text-xl font-semibold text-blue-600 dark:text-blue-400">Enumerator • Admin Data • Pengolahan Statistik</p>
         <p class="mt-6 max-w-2xl text-slate-600 dark:text-slate-300 leading-8">
-          Portofolio yang terhubung dengan database kegiatan, hasil lapangan, dokumentasi & publikasi, serta sertifikasi.
-          Data pada halaman ini dapat disinkronkan langsung dari Google Sheets melalui Google Apps Script.
+          Selamat datang di portofolio digital profesional. 
+		  Berpengalaman tinggi dalam pendataan lapangan (CAPI/PAPI), 
+		  validasi statistik, serta pengolahan database untuk berbagai Sensus & 
+		  Survei Statistik Nasional Badan Pusat Statistik.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#kegiatan" class="px-5 py-3 rounded-xl bg-blue-600 text-white font-bold shadow-lg shadow-blue-600/20 hover:bg-blue-700">Lihat Kegiatan</a>
@@ -130,6 +159,82 @@
 </section>
 </main>
 
+
+<section id="kontak" class="contact-section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Hubungi Saya</span>
+      <h2>Kontak</h2>
+      <p>Silakan hubungi saya untuk kebutuhan kerja sama, pendataan, pengolahan data, administrasi data, atau informasi profesional lainnya.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Mari Terhubung</h3>
+        <p>Gunakan informasi berikut untuk menghubungi saya secara langsung.</p>
+
+        <div class="contact-list">
+          <div class="contact-item">
+            <div class="contact-icon">✉</div>
+            <div>
+              <strong>Email</strong>
+              <a href="mailto:handar.data@gmail.com">handar.data@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">WA</div>
+            <div>
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/6281329191582" target="_blank" rel="noopener">+62 813-2919-1582</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">⌖</div>
+            <div>
+              <strong>Lokasi</strong>
+              <span>Demak, Jawa Tengah, Indonesia</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon">in</div>
+            <div>
+              <strong>LinkedIn</strong>
+              <a href="#" target="_blank" rel="noopener">Profil LinkedIn</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <h3>Kirim Pesan</h3>
+        <form class="contact-form" id="contactForm">
+          <div>
+            <label for="contactName">Nama</label>
+            <input id="contactName" name="name" type="text" placeholder="Nama Anda" required>
+          </div>
+          <div>
+            <label for="contactEmail">Email</label>
+            <input id="contactEmail" name="email" type="email" placeholder="nama@email.com" required>
+          </div>
+          <div>
+            <label for="contactSubject">Subjek</label>
+            <input id="contactSubject" name="subject" type="text" placeholder="Subjek pesan" required>
+          </div>
+          <div>
+            <label for="contactMessage">Pesan</label>
+            <textarea id="contactMessage" name="message" placeholder="Tuliskan pesan Anda..." required></textarea>
+          </div>
+          <button class="contact-submit" type="submit">Kirim melalui Email</button>
+          <p class="contact-note">Tombol akan membuka aplikasi email Anda dengan isi pesan yang sudah disiapkan.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="border-t border-slate-200 dark:border-slate-800">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row justify-between gap-3 text-sm text-slate-500">
   <span>© <span id="year"></span> Handar Arfianto</span><span id="syncStatus">Memuat database...</span>
@@ -142,7 +247,7 @@
 // KONFIGURASI
 // ===============================
 const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxMbHiEZwB5cq0_SotynPP5L1Ux1-h2vByrj3Wa2mN8/dev";
-const PROFILE_PHOTO_URL = "https://drive.google.com/uc?id=1vluWh4rhoQh8oYRFIRWfjrMVALVSsySy"; // Isi URL foto profesional Anda.
+const PROFILE_PHOTO_URL = "https://google.com"; // Isi URL foto profesional Anda.
 
 // Data awal berasal dari workbook lampiran.
 // Setelah GOOGLE_SHEETS_API_URL diisi, data dari Google Sheets akan menjadi sumber utama.
@@ -246,5 +351,28 @@ function init(){
 }
 document.addEventListener("DOMContentLoaded",init);
 </script>
+
+<script id="CONTACT_FORM_HANDLER">
+(function(){
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const subject = document.getElementById('contactSubject').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+
+    const destination = 'emailanda@example.com';
+    const body = 'Nama: ' + name + '\nEmail: ' + email + '\n\n' + message;
+
+    window.location.href =
+      'mailto:' + destination +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+
 </body>
 </html>
