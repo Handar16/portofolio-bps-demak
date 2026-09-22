@@ -3,12 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#003366">
-    <meta name="description" content="Portofolio Handar Arfianto - Enumerator dan Admin Data">
     <title>Portofolio Enumerator & Admin Data BPS Kab. Demak</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Google Sheets / Apps Script configuration
+        const GOOGLE_SHEETS_API_URL = 'GANTI_DENGAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT';
+        // Isi dengan URL foto profesional Anda. Bisa berupa URL gambar dari GitHub/Google Drive/CDN.
+        const PROFESSIONAL_PROFILE_PHOTO_URL = '';
+        let sampleDatabase = [];
+        let statusChartInstance = null;
+        let districtChartInstance = null;
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[c]));
+        }
+
+        function isSheetConfigured() {
+            return GOOGLE_SHEETS_API_URL && !GOOGLE_SHEETS_API_URL.includes('https://script.google.com/macros/s/AKfycbxMbHiEZwB5cq0_SotynPP5L1Ux1-h2vByrj3Wa2mN8/dev');
+        }
+
+        function normalizeLapangan(item) {
+            return {
+                id: String(item.ID ?? item.id ?? ''),
+                survei: String(item.Survei ?? item.survei ?? ''),
+                kecamatan: String(item.Kecamatan ?? item.kecamatan ?? ''),
+                metode: String(item.Metode ?? item.metode ?? ''),
+                target: Number(item.Target ?? item.target ?? 0),
+                realisasi: Number(item.Realisasi ?? item.realisasi ?? 0),
+                status: String(item.Status ?? item.status ?? ''),
+                
+            };
+        }
+
+        async function loadHasilLapangan() {
+            if (!isSheetConfigured()) {
+                sampleDatabase = [
+                    {id:'HL-2026-001',survei:'Susenas Maret 2026',kecamatan:'Demak',metode:'CAPI',target:120,realisasi:118,status:'Tervalidasi'},
+                    {id:'HL-2026-002',survei:'Sakernas Feb 2026',kecamatan:'Sayung',metode:'CAPI',target:100,realisasi:92,status:'Menunggu Verifikasi'},
+                    {id:'HL-2026-003',survei:'Survei Ubinan Padi',kecamatan:'Wonosalam',metode:'PAPI',target:80,realisasi:75,status:'Perlu Perbaikan'}
+                ];
+                renderTable();
+                return;
+            }
+            try {
+                const response = await fetch(GOOGLE_SHEETS_API_URL + '?action=getAll&t=' + Date.now());
+                const data = await response.json();
+                sampleDatabase = Array.isArray(data.HasilLapangan) ? data.HasilLapangan.map(normalizeLapangan) : [];
+                renderTable();
+            } catch (error) {
+                console.error(error);
+                alert('Gagal mengambil Database Hasil Lapangan dari Google Sheets.');
+            }
+        }
+
+        async function sendLapangan(payload) {
+            if (!isSheetConfigured()) {
+                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
+                return false;
+            }
+            const response = await fetch(GOOGLE_SHEETS_API_URL, {
+                method:'POST',
+                headers:{'Content-Type':'text/plain;charset=utf-8'},
+                body:JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (!result.success) throw new Error(result.message || 'Operasi gagal.');
+            return true;
+        }
+
+
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -62,8 +126,6 @@
                     <a href="#beranda" class="text-bps-blue dark:text-slate-200 hover:text-bps-orange dark:hover:text-bps-orange transition">Beranda</a>
                     <a href="#profil" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Profil & Keahlian</a>
                     <a href="#portofolio" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Sensus & Survei</a>
-                    <a href="#portofolio" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Kegiatan</a>
-                    <a href="#dokumentasi" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition">Dokumentasi & Publikasi</a>
                     <a href="#database" class="text-slate-600 dark:text-slate-300 hover:text-bps-orange dark:hover:text-bps-orange transition flex items-center gap-1">
                         <span class="relative flex h-2 w-2">
                           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-bps-orange opacity-75"></span>
@@ -94,8 +156,6 @@
             <a href="#beranda" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Beranda</a>
             <a href="#profil" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Profil & Keahlian</a>
             <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sensus & Survei</a>
-            <a href="#portofolio" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kegiatan</a>
-            <a href="#dokumentasi" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Dokumentasi & Publikasi</a>
             <a href="#database" class="block py-2 text-bps-orange font-semibold">Database Data (CRUD)</a>
             <a href="#sertifikat" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Sertifikat & Prestasi</a>
             <a href="#kontak" class="block py-2 text-slate-700 dark:text-slate-200 hover:text-bps-orange">Kontak</a>
@@ -187,8 +247,9 @@
                 <!-- Bio Card -->
                 <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-800/60 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-16 h-16 rounded-full bg-bps-blue flex items-center justify-center text-white text-2xl font-bold shadow-md">
-                            HA
+                        <div class="w-20 h-20 rounded-full bg-bps-blue flex items-center justify-center text-white text-2xl font-bold shadow-md overflow-hidden ring-4 ring-white dark:ring-slate-700">
+                            <img id="professionalProfilePhoto" src="" alt="Foto Profil Handar Arfianto" class="hidden w-full h-full object-cover">
+                            <span id="professionalProfileInitials">HA</span>
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-slate-900 dark:text-white">Handar Arfianto, AMd.Stat.</h3>
@@ -276,29 +337,18 @@
     <!-- Portfolio Sensus & Survei Section -->
     <section id="portofolio" class="py-16 bg-slate-50 dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                <div class="text-center md:text-left max-w-3xl">
-                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Rekam Jejak Lapangan</h2>
-                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Portofolio Sensus & Survei BPS</p>
-                    <div class="w-16 h-1 bg-bps-orange md:mx-0 mx-auto mt-3 rounded-full"></div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-3">Data kegiatan dikelola dari Google Sheets.</p>
-                </div>
-                <div class="flex items-center gap-2 justify-center">
-                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold">
-                        <i class="fa-solid fa-rotate mr-1"></i> Muat Ulang
-                    </button>
-                    <button onclick="openKegiatanModal()" class="px-4 py-2.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white text-xs font-bold">
-                        <i class="fa-solid fa-plus mr-1"></i> Tambah Kegiatan
-                    </button>
-                </div>
+            <div class="text-center max-w-3xl mx-auto mb-8">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Rekam Jejak Lapangan</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Portofolio Sensus & Survei BPS</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
             </div>
 
             <!-- Filter Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
-                <button onclick="filterPortfolio('all', this)" class="portfolio-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-bps-blue text-white shadow-md transition">Semua Kegiatan</button>
-                <button onclick="filterPortfolio('sensus', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Sensus Nasional</button>
-                <button onclick="filterPortfolio('sosial', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Survei Sosial Ekonomi</button>
-                <button onclick="filterPortfolio('produksi', this)" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Pertanian & Industri</button>
+                <button onclick="filterPortfolio('all')" class="portfolio-filter-btn active px-4 py-2 rounded-xl text-xs font-semibold bg-bps-blue text-white shadow-md transition">Semua Kegiatan</button>
+                <button onclick="filterPortfolio('sensus')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Sensus Nasional</button>
+                <button onclick="filterPortfolio('sosial')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Survei Sosial Ekonomi</button>
+                <button onclick="filterPortfolio('produksi')" class="portfolio-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">Pertanian & Industri</button>
             </div>
 
             <!-- Portfolio Cards Grid -->
@@ -322,6 +372,7 @@
                 </div>
                 
                 <div class="flex items-center gap-3">
+                    <button onclick="loadHasilLapangan()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2"><i class="fa-solid fa-rotate"></i> Muat Ulang</button>
                     <button onclick="exportToCSV()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2">
                         <i class="fa-solid fa-file-csv text-bps-green text-sm"></i> Ekspor CSV
                     </button>
@@ -377,7 +428,7 @@
             <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-t-2xl border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="relative w-full sm:w-72">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
-                    <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Cari Nama/Kecamatan/ID..." class="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue">
+                    <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Cari Survei/Kecamatan/ID..." class="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue">
                 </div>
                 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -395,12 +446,13 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs uppercase font-bold tracking-wider">
-                            <th class="p-4">ID / NKS</th>
-                            <th class="p-4">Nama Responden / KRT</th>
+                            <th class="p-4">ID</th>
+                            <th class="p-4">Survei</th>
                             <th class="p-4">Kecamatan</th>
-                            <th class="p-4">Jenis Survei</th>
                             <th class="p-4">Metode</th>
-                            <th class="p-4">Status Verifikasi</th>
+                            <th class="p-4">Target</th>
+                            <th class="p-4">Realisasi</th>
+                            <th class="p-4">Status</th>
                             <th class="p-4 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -413,43 +465,45 @@
         </div>
     </section>
 
-    <!-- Dokumentasi & Publikasi -->
-    <section id="dokumentasi" class="py-16 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                <div>
-                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Dokumentasi & Publikasi</h2>
-                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Dokumentasi Kegiatan & Publikasi</p>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Data dikelola dari Google Sheets sehingga dapat ditambah dan diedit tanpa mengubah HTML.</p>
-                </div>
-                <div class="flex flex-wrap gap-2">
-                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"><i class="fa-solid fa-rotate mr-1"></i> Muat Ulang</button>
-                    <button onclick="openDocumentationModal()" class="px-4 py-2.5 rounded-xl bg-bps-blue hover:bg-blue-900 text-white text-xs font-bold"><i class="fa-solid fa-plus mr-1"></i> Tambah Dokumentasi</button>
-                </div>
-            </div>
-            <div id="documentationGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-12 text-slate-400">Memuat dokumentasi...</div>
-            </div>
-        </div>
-    </section>
-
     <!-- Sertifikat & Prestasi -->
     <section id="sertifikat" class="py-16 bg-slate-50 dark:bg-slate-950">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-                <div>
-                    <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
-                    <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Sertifikat & Penghargaan</p>
-                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Data sertifikasi dan penghargaan dikelola melalui Google Sheets.</p>
-                </div>
-                <div class="flex gap-2">
-                    <button onclick="loadSheetContent()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"><i class="fa-solid fa-rotate mr-1"></i> Muat Ulang</button>
-                    <button onclick="openCertificateModal()" class="px-4 py-2.5 rounded-xl bg-bps-orange hover:bg-orange-600 text-white text-xs font-bold"><i class="fa-solid fa-plus mr-1"></i> Tambah Sertifikat</button>
-                </div>
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-extrabold tracking-wider text-bps-orange uppercase">Kompetensi Teruji</h2>
+                <p class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Sertifikat & Penghargaan</p>
+                <div class="w-16 h-1 bg-bps-orange mx-auto mt-3 rounded-full"></div>
             </div>
-            <div id="certificateGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="col-span-full text-center py-12 text-slate-400">Memuat sertifikasi...</div>
-            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cert 1 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950 text-bps-blue dark:text-blue-300 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-blue-100 text-bps-blue dark:bg-blue-900 dark:text-blue-200">Sertifikat Petugas</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Petugas Pendataan Sensus Pertanian 2023 (ST2023)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Diterbitkan oleh BPS Kabupaten Demak atas kelulusan pelatihan dan capaian target pendataan CAPI.</p>
+                </div>
+
+                <!-- Cert 2 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 dark:bg-orange-950 text-bps-orange flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-orange-100 text-bps-orange dark:bg-orange-900 dark:text-orange-200">Penghargaan</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Mitra Statistik Terbaik Kategori Akurasi Data 2022</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Penghargaan atas keakuratan entri data Susenas dan minim perbaikan dari Penanggung Jawab Teknis.</p>
+                </div>
+
+                <!-- Cert 3 -->
+                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition">
+                    <div class="w-12 h-12 rounded-xl bg-green-50 dark:bg-green-950 text-bps-green flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <span class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-green-100 text-bps-green dark:bg-green-900 dark:text-green-200">Pelatihan IT</span>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base mt-2">Pengolahan & Manajemen Database Statistik</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Sertifikat kompetensi pengolahan data menggunakan SPSS dan Advanced Excel untuk analisis daerah.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -505,58 +559,6 @@
         </div>
     </footer>
 
-    <!-- Modal Kegiatan -->
-    <div id="kegiatanModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 p-4">
-        <div class="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6">
-            <div class="flex items-center justify-between mb-5">
-                <h3 id="kegiatanModalTitle" class="text-xl font-extrabold text-slate-900 dark:text-white">Tambah Kegiatan</h3>
-                <button type="button" onclick="closeKegiatanModal()" class="text-slate-400 hover:text-red-500 text-xl"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveKegiatan(event)" class="space-y-4">
-                <input id="kegiatanEditId" type="hidden">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="sm:col-span-2"><label class="block text-xs font-bold mb-1">Judul Kegiatan</label><input id="kegiatanTitle" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                    <div><label class="block text-xs font-bold mb-1">Kategori</label><select id="kegiatanCategory" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"><option value="sensus">Sensus Nasional</option><option value="sosial">Survei Sosial Ekonomi</option><option value="produksi">Pertanian & Industri</option></select></div>
-                    <div><label class="block text-xs font-bold mb-1">Tahun</label><input id="kegiatanYear" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="2026 atau 2025 - 2026"></div>
-                    <div><label class="block text-xs font-bold mb-1">Peran</label><input id="kegiatanRole" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                    <div><label class="block text-xs font-bold mb-1">Target / Responden</label><input id="kegiatanRespondents" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                    <div><label class="block text-xs font-bold mb-1">Metode</label><input id="kegiatanMethod" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                    <div><label class="block text-xs font-bold mb-1">Status</label><input id="kegiatanStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="Selesai 100%"></div>
-                    <div class="sm:col-span-2"><label class="block text-xs font-bold mb-1">Deskripsi</label><textarea id="kegiatanDescription" required rows="4" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></textarea></div>
-                </div>
-                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
-                    <button type="button" onclick="closeKegiatanModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Dokumentasi & Sertifikasi -->
-    <div id="sheetItemModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-[60] p-4">
-        <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-xl w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
-            <div class="p-5 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
-                <h3 id="sheetModalTitle" class="font-bold text-slate-900 dark:text-white">Tambah Item</h3>
-                <button onclick="closeSheetModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-            <form id="sheetItemForm" onsubmit="saveSheetItem(event)" class="p-6 space-y-4 text-xs">
-                <input type="hidden" id="sheetEditId"><input type="hidden" id="sheetItemType">
-                <div><label class="block font-semibold mb-1">Judul</label><input id="sheetTitle" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block font-semibold mb-1">Kategori / Jenis</label><input id="sheetCategory" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                    <div><label class="block font-semibold mb-1">Tahun</label><input id="sheetYear" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></div>
-                </div>
-                <div><label class="block font-semibold mb-1">Deskripsi</label><textarea id="sheetDescription" rows="4" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800"></textarea></div>
-                <div><label class="block font-semibold mb-1">Link / URL (opsional)</label><input id="sheetUrl" type="url" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="https://..."></div>
-                <div><label class="block font-semibold mb-1">URL Gambar (opsional)</label><input id="sheetImage" type="url" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800" placeholder="https://...jpg"></div>
-                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
-                    <button type="button" onclick="closeSheetModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Modal Entry Data (Add / Edit) -->
     <div id="dataModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-lg w-full border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden">
@@ -569,199 +571,86 @@
 
             <form id="dataForm" onsubmit="saveData(event)" class="p-6 space-y-4 text-xs">
                 <input type="hidden" id="editIndex" value="-1">
-
-                <div>
-                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ID NKS / Sampel</label>
-                    <input type="text" id="formNks" required placeholder="Contoh: NKS-2026-0812" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Responden / Kepala RT</label>
-                    <input type="text" id="formNama" required placeholder="Nama Lengkap..." class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
-                </div>
-
+                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ID</label><input type="text" id="formNks" required placeholder="Contoh: HL-2026-001" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
                 <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kecamatan</label>
-                        <select id="formKecamatan" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
-                            <option value="Mranggen">Mranggen</option>
-							<option value="Karangawen">Karangawen</option>
-							<option value="Guntur">Guntur</option>
-							<option value="Sayung">Sayung</option>
-							<option value="Karangtengah">Karangtengah</option>
-							<option value="Bonang">Bonang</option>
-							<option value="Demak">Demak</option>
-                            <option value="Wonosalam">Wonosalam</option>
-                            <option value="Dempet">Dempet</option>
-                            <option value="Kebonagung">Kebonagung</option>
-                            <option value="Gajah">Gajah</option>
-                            <option value="Karanganyar">Karanganyar</option>
-                            <option value="Mijen">Mijen</option>
-                            <option value="Wedung">Wedung</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Metode Pendataan</label>
-                        <select id="formMetode" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
-                            <option value="CAPI">CAPI (Aplikasi Digital)</option>
-                            <option value="PAPI">PAPI (Kertas/Dokumen)</option>
-                        </select>
-                    </div>
+                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Target</label><input type="number" id="formTarget" required min="0" placeholder="Contoh: 100" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
+                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Realisasi</label><input type="number" id="formRealisasi" required min="0" placeholder="Contoh: 95" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
                 </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Sensus / Survei</label>
-                    <input type="text" id="formSurvei" required placeholder="Misal: Susenas Maret 2026" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                <div class="grid grid-cols-2 gap-4">
+                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kecamatan</label><select id="formKecamatan" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>Mranggen</option><option>Karangawen</option><option>Guntur</option><option>Sayung</option><option>Karangtengah</option><option>Bonang</option><option>Demak</option><option>Wonosalam</option><option>Dempet</option><option>Kebonagung</option><option>Gajah</option><option>Karanganyar</option><option>Mijen</option><option>Wedung</option></select></div>
+                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Metode Pendataan</label><select id="formMetode" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>CAPI</option><option>PAPI</option></select></div>
                 </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Verifikasi</label>
-                    <select id="formStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
-                        <option value="Tervalidasi">Tervalidasi (Clean)</option>
-                        <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
-                        <option value="Perlu Perbaikan">Perlu Perbaikan Lapangan</option>
-                    </select>
-                </div>
-
-                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
-                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold">Batal</button>
-                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue hover:bg-blue-900 text-white font-bold shadow-md">Simpan Data</button>
-                </div>
+                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Sensus / Survei</label><input type="text" id="formSurvei" required placeholder="Misal: Susenas Maret 2026" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
+                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Verifikasi</label><select id="formStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>Tervalidasi</option><option>Menunggu Verifikasi</option><option>Perlu Perbaikan</option></select></div>
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700"><button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button><button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan Data</button></div>
             </form>
         </div>
     </div>
 
     <script>
-        /* GOOGLE SHEETS CONTENT MANAGER
-           Sheet: Dokumentasi dan Sertifikasi
-           Kolom: ID | Judul | Kategori | Tahun | Deskripsi | URL | Gambar | Aktif
-           Ganti URL berikut dengan URL Web App Google Apps Script. */
-        // ============================================================
-        // KONFIGURASI GITHUB PAGES + GOOGLE SHEETS
-        // Tempel URL Web App Google Apps Script di antara tanda kutip.
-        // Contoh: https://script.google.com/macros/s/XXXXXXXX/exec
-        // ============================================================
-        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxMbHiEZwB5cq0_SotynPP5L1Ux1-h2vByrj3Wa2mN8/dev';
-        let sheetContent = { Kegiatan: [], Dokumentasi: [], Sertifikasi: [] };
-
-        function escapeHtml(value = '') {
-            return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-        }
-
-        async function loadSheetContent() {
-            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) { renderKegiatan(); renderSheetContent(); return; }
-            try {
-                const res = await fetch(GOOGLE_SHEETS_API_URL + '?action=getAll', {cache:'no-store'});
-                const data = await res.json();
-                sheetContent.Kegiatan = Array.isArray(data.Kegiatan) ? data.Kegiatan : [];
-                sheetContent.Dokumentasi = Array.isArray(data.Dokumentasi) ? data.Dokumentasi : [];
-                sheetContent.Sertifikasi = Array.isArray(data.Sertifikasi) ? data.Sertifikasi : [];
-                renderKegiatan();
-                renderSheetContent();
-            } catch (err) {
-                console.error(err); renderSheetContent();
-                alert('Google Sheets belum dapat dimuat. Pastikan URL Web App dan aksesnya benar.');
-            }
-        }
-
-        function renderSheetContent() {
-            const docs = document.getElementById('documentationGrid');
-            const certs = document.getElementById('certificateGrid');
-            if (docs) docs.innerHTML = sheetContent.Dokumentasi.length ? sheetContent.Dokumentasi.map(x => sheetCard(x,'Dokumentasi')).join('') : emptySheetState('Belum ada dokumentasi/publikasi.');
-            if (certs) certs.innerHTML = sheetContent.Sertifikasi.length ? sheetContent.Sertifikasi.map(x => sheetCard(x,'Sertifikasi')).join('') : emptySheetState('Belum ada sertifikat atau penghargaan.');
-        }
-
-        function emptySheetState(text) {
-            return `<div class="col-span-full text-center py-12 text-slate-400"><i class="fa-regular fa-folder-open text-2xl mb-3"></i><p>${escapeHtml(text)}</p></div>`;
-        }
-
-        function safeUrl(value) {
-            const v = String(value || '').trim();
-            if (!v) return '';
-            try {
-                const u = new URL(v, window.location.href);
-                return ['http:', 'https:'].includes(u.protocol) ? u.href : '';
-            } catch (_) { return ''; }
-        }
-
-        function sheetCard(item, type) {
-            const itemId = encodeURIComponent(String(item.ID || ''));
-            const imageUrl = safeUrl(item.Gambar);
-            const documentUrl = safeUrl(item.URL);
-            const image = imageUrl ? `<img src="${escapeHtml(imageUrl)}" alt="${escapeHtml(item.Judul)}" class="w-full h-40 object-cover rounded-xl mb-4" onerror="this.style.display='none'">` : '';
-            const link = documentUrl ? `<a href="${escapeHtml(documentUrl)}" target="_blank" rel="noopener" class="text-bps-blue dark:text-blue-300 font-semibold hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Lihat Dokumen</a>` : '<span></span>';
-            return `<article class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition">${image}
-                <div class="flex justify-between items-start gap-2 mb-3"><span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-bps-blue dark:bg-blue-950 dark:text-blue-300">${escapeHtml(item.Tahun||'')}</span><span class="text-[10px] font-bold text-bps-orange">${escapeHtml(item.Kategori||type)}</span></div>
-                <h3 class="font-bold text-slate-900 dark:text-white text-base">${escapeHtml(item.Judul||'')}</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">${escapeHtml(item.Deskripsi||'')}</p>
-                <div class="flex items-center justify-between mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">${link}
-                    <div class="flex gap-3"><button onclick="editSheetItem('${type}',decodeURIComponent('${itemId}'))" class="text-blue-600" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="deleteSheetItem('${type}',decodeURIComponent('${itemId}'))" class="text-red-600" title="Hapus"><i class="fa-solid fa-trash"></i></button></div>
-                </div></article>`;
-        }
-
-        function openDocumentationModal(){ openSheetModal('Dokumentasi'); }
-        function openCertificateModal(){ openSheetModal('Sertifikasi'); }
-
-        function openSheetModal(type,item=null){
-            document.getElementById('sheetItemType').value=type; document.getElementById('sheetEditId').value=item?.ID||'';
-            document.getElementById('sheetModalTitle').innerText=(item?'Edit ':'Tambah ')+type;
-            document.getElementById('sheetTitle').value=item?.Judul||''; document.getElementById('sheetCategory').value=item?.Kategori||'';
-            document.getElementById('sheetYear').value=item?.Tahun||''; document.getElementById('sheetDescription').value=item?.Deskripsi||'';
-            document.getElementById('sheetUrl').value=item?.URL||''; document.getElementById('sheetImage').value=item?.Gambar||'';
-            document.getElementById('sheetItemModal').classList.remove('hidden'); document.getElementById('sheetItemModal').classList.add('flex');
-        }
-        function closeSheetModal(){document.getElementById('sheetItemModal').classList.add('hidden');document.getElementById('sheetItemModal').classList.remove('flex');}
-        function editSheetItem(type,id){const item=sheetContent[type].find(x=>String(x.ID)===String(id));if(item)openSheetModal(type,item);}
-
-        async function saveSheetItem(e){
-            e.preventDefault();
-            if(GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')){alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');return;}
-            const type=document.getElementById('sheetItemType').value;
-            const payload={action:document.getElementById('sheetEditId').value?'update':'create',sheet:type,
-                ID:document.getElementById('sheetEditId').value||('ID-'+Date.now()),Judul:document.getElementById('sheetTitle').value.trim(),
-                Kategori:document.getElementById('sheetCategory').value.trim(),Tahun:document.getElementById('sheetYear').value.trim(),
-                Deskripsi:document.getElementById('sheetDescription').value.trim(),URL:document.getElementById('sheetUrl').value.trim(),
-                Gambar:document.getElementById('sheetImage').value.trim(),Aktif:'TRUE'};
-            try{const r=await fetch(GOOGLE_SHEETS_API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});const result=await r.json();if(!result.success)throw new Error(result.message||'Gagal menyimpan');closeSheetModal();await loadSheetContent();}
-            catch(err){alert('Gagal menyimpan ke Google Sheets: '+err.message);}
-        }
-
-        async function deleteSheetItem(type,id){
-            if(!confirm('Hapus item ini dari Google Sheets?'))return;
-            if(GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')){alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');return;}
-            try{const r=await fetch(GOOGLE_SHEETS_API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'delete',sheet:type,ID:id})});const result=await r.json();if(!result.success)throw new Error(result.message||'Gagal menghapus');await loadSheetContent();}
-            catch(err){alert('Gagal menghapus dari Google Sheets: '+err.message);}
-        }
-
         // Data Portofolio Sensus/Survei
-        let portfolioData = [];
-
-        function mapKegiatan(item) {
-            return {
-                ID: item.ID || '',
-                title: item.Judul || '',
-                category: item.Kategori || 'sensus',
-                year: item.Tahun || '',
-                role: item.Peran || '',
-                respondents: item.Responden || '',
-                method: item.Metode || '',
-                status: item.Status || '',
-                desc: item.Deskripsi || ''
-            };
-        }
-
-        // Initial Interactive Table Data (Simulasi Database BPS)
-        let sampleDatabase = [
-            { id: "NKS-2026-101", nama: "Siti Rahmawati", kecamatan: "Demak", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
-            { id: "NKS-2026-102", nama: "Hj. Ahmad Dahlan", kecamatan: "Sayung", survei: "Sakernas Feb 2026", metode: "CAPI", status: "Menunggu Verifikasi" },
-            { id: "NKS-2026-103", nama: "Sukarman", kecamatan: "Wonosalam", survei: "Survei Ubinan Padi", metode: "PAPI", status: "Perlu Perbaikan" },
-            { id: "NKS-2026-104", nama: "Bambang Mulyono", kecamatan: "Karangtengah", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
-            { id: "NKS-2026-105", nama: "Koperasi Tani Makmur", kecamatan: "Bonang", survei: "Survei Usaha Pertanian", metode: "CAPI", status: "Tervalidasi" }
+        const portfolioData = [
+            {
+                title: "Sensus Pertanian 2023 (ST2023)",
+                category: "sensus",
+                year: "2023",
+                role: "Petugas Pendataan Lapangan (PPL)",
+                respondents: "250 UTP",
+                method: "CAPI (ST2023 App)",
+                status: "Selesai 100%",
+                desc: "Pendataan Unit Usaha Pertanian Perorangan di wilayah Kecamatan Wonosalam & Demak Kota."
+            },
+            {
+                title: "Survei Sosial Ekonomi Nasional (Susenas)",
+                category: "sosial",
+                year: "2024",
+                role: "Enumerator & Validasi",
+                respondents: "120 Rumah Tangga",
+                method: "CAPI (FASIH)",
+                status: "Selesai 100%",
+                desc: "Mengumpulkan data konsumsi/pengeluaran dan modul ketahanan pangan masyarakat."
+            },
+            {
+                title: "Survei Angkatan Kerja Nasional (Sakernas)",
+                category: "sosial",
+                year: "2023 - 2024",
+                role: "Petugas Pendataan Lapangan",
+                respondents: "180 Responden",
+                method: "CAPI / PAPI",
+                status: "Selesai 100%",
+                desc: "Pendataan indikator ketenagakerjaan, tingkat pengangguran terbuka di Kab. Demak."
+            },
+            {
+                title: "Pemutakhiran Sensus Ekonomi (SE2026 Prep)",
+                category: "sensus",
+                year: "2025",
+                role: "Admin Data & Geotagging",
+                respondents: "310 Usaha/Perusahaan",
+                method: "CAPI & GIS Mapping",
+                status: "Selesai 100%",
+                desc: "Pemutakhiran direktori perusahaan dan geotagging bangunan usaha berbasis Wilkerstat."
+            },
+            {
+                title: "Survei Ubinan Padi & Jagung (KSA)",
+                category: "produksi",
+                year: "2023 - 2025",
+                role: "Petugas Ubinan Lapangan",
+                respondents: "45 Titik Sampel",
+                method: "PAPI & App KSA",
+                status: "Rutin Berjalan",
+                desc: "Pengukuran riil produktivitas tanaman pangan kuadrat ubinan di lahan pertanian Demak."
+            },
+            {
+                title: "Survei Tingkat Penghunian Kamar Hotel (VHTS)",
+                category: "produksi",
+                year: "2024",
+                role: "Admin Entry Data",
+                respondents: "28 Akomodasi",
+                method: "Web Portal BPS",
+                status: "Selesai 100%",
+                desc: "Pengumpulan data bulanan indikator pariwisata dan okupansi hotel di Demak."
+            }
         ];
-
-        let statusChartInstance = null;
-        let districtChartInstance = null;
 
         // Render Portfolio Cards
         function renderPortfolio(filter = 'all') {
@@ -778,32 +667,28 @@
                         <div>
                             <div class="flex justify-between items-start gap-2 mb-3">
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-blue-50 text-bps-blue dark:bg-blue-950 dark:text-blue-300">
-                                    ${escapeHtml(item.year)}
+                                    ${item.year}
                                 </span>
                                 <span class="text-xs font-semibold text-bps-green flex items-center gap-1">
-                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${escapeHtml(item.status)}
+                                    <i class="fa-solid fa-circle-check text-[10px]"></i> ${item.status}
                                 </span>
                             </div>
-                            <h3 class="font-bold text-slate-900 dark:text-white text-base mb-2">${escapeHtml(item.title)}</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">${escapeHtml(item.desc)}</p>
+                            <h3 class="font-bold text-slate-900 dark:text-white text-base mb-2">${item.title}</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">${item.desc}</p>
                         </div>
 
                         <div class="pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs">
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Peran:</span>
-                                <span class="font-semibold">${escapeHtml(item.role)}</span>
+                                <span class="font-semibold">${item.role}</span>
                             </div>
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Target/Cakupan:</span>
-                                <span class="font-semibold">${escapeHtml(item.respondents)}</span>
+                                <span class="font-semibold">${item.respondents}</span>
                             </div>
                             <div class="flex justify-between text-slate-600 dark:text-slate-300">
                                 <span class="text-slate-400">Metode:</span>
-                                <span class="font-semibold text-bps-orange">${escapeHtml(item.method)}</span>
-                            </div>
-                            <div class="flex justify-end gap-3 pt-3 mt-2 border-t border-slate-100 dark:border-slate-800">
-                                <button onclick="editKegiatan('${escapeHtml(item.ID)}')" class="text-blue-600 hover:text-blue-800" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button onclick="deleteKegiatan('${escapeHtml(item.ID)}')" class="text-red-600 hover:text-red-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <span class="font-semibold text-bps-orange">${item.method}</span>
                             </div>
                         </div>
                     </div>
@@ -812,101 +697,15 @@
             });
         }
 
-        function renderKegiatan() {
-            portfolioData = sheetContent.Kegiatan.filter(x => String(x.Aktif).toUpperCase() !== 'FALSE').map(mapKegiatan);
-            renderPortfolio('all');
-        }
-
-        function openKegiatanModal(item = null) {
-            document.getElementById('kegiatanEditId').value = item?.ID || '';
-            document.getElementById('kegiatanModalTitle').innerText = item ? 'Edit Kegiatan' : 'Tambah Kegiatan';
-            document.getElementById('kegiatanTitle').value = item?.Judul || '';
-            document.getElementById('kegiatanCategory').value = item?.Kategori || 'sensus';
-            document.getElementById('kegiatanYear').value = item?.Tahun || '';
-            document.getElementById('kegiatanRole').value = item?.Peran || '';
-            document.getElementById('kegiatanRespondents').value = item?.Responden || '';
-            document.getElementById('kegiatanMethod').value = item?.Metode || '';
-            document.getElementById('kegiatanStatus').value = item?.Status || '';
-            document.getElementById('kegiatanDescription').value = item?.Deskripsi || '';
-            document.getElementById('kegiatanModal').classList.remove('hidden');
-            document.getElementById('kegiatanModal').classList.add('flex');
-        }
-
-        function closeKegiatanModal() {
-            document.getElementById('kegiatanModal').classList.add('hidden');
-            document.getElementById('kegiatanModal').classList.remove('flex');
-        }
-
-        function editKegiatan(id) {
-            const item = sheetContent.Kegiatan.find(x => String(x.ID) === String(id));
-            if (item) openKegiatanModal(item);
-        }
-
-        async function saveKegiatan(e) {
-            e.preventDefault();
-            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) {
-                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
-                return;
-            }
-            const id = document.getElementById('kegiatanEditId').value;
-            const payload = {
-                action: id ? 'update' : 'create',
-                sheet: 'Kegiatan',
-                ID: id || ('KEG-' + Date.now()),
-                Judul: document.getElementById('kegiatanTitle').value.trim(),
-                Kategori: document.getElementById('kegiatanCategory').value,
-                Tahun: document.getElementById('kegiatanYear').value.trim(),
-                Peran: document.getElementById('kegiatanRole').value.trim(),
-                Responden: document.getElementById('kegiatanRespondents').value.trim(),
-                Metode: document.getElementById('kegiatanMethod').value.trim(),
-                Status: document.getElementById('kegiatanStatus').value.trim(),
-                Deskripsi: document.getElementById('kegiatanDescription').value.trim(),
-                Aktif: 'TRUE'
-            };
-            try {
-                const r = await fetch(GOOGLE_SHEETS_API_URL, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'text/plain;charset=utf-8'},
-                    body: JSON.stringify(payload)
-                });
-                const result = await r.json();
-                if (!result.success) throw new Error(result.message || 'Gagal menyimpan');
-                closeKegiatanModal();
-                await loadSheetContent();
-            } catch (err) {
-                alert('Gagal menyimpan kegiatan ke Google Sheets: ' + err.message);
-            }
-        }
-
-        async function deleteKegiatan(id) {
-            if (!confirm('Hapus kegiatan ini dari Google Sheets?')) return;
-            if (GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN')) {
-                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
-                return;
-            }
-            try {
-                const r = await fetch(GOOGLE_SHEETS_API_URL, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'text/plain;charset=utf-8'},
-                    body: JSON.stringify({action:'delete', sheet:'Kegiatan', ID:id})
-                });
-                const result = await r.json();
-                if (!result.success) throw new Error(result.message || 'Gagal menghapus');
-                await loadSheetContent();
-            } catch (err) {
-                alert('Gagal menghapus kegiatan dari Google Sheets: ' + err.message);
-            }
-        }
-
         // Filter Portfolio Active State
-        function filterPortfolio(category, sourceButton = null) {
+        function filterPortfolio(category) {
             document.querySelectorAll('.portfolio-filter-btn').forEach(btn => {
                 btn.classList.remove('bg-bps-blue', 'text-white', 'shadow-md');
                 btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
             });
 
-            const target = sourceButton || document.querySelector(`.portfolio-filter-btn[onclick*="'${category}'"]`);
-            if (target) { target.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300'); target.classList.add('bg-bps-blue', 'text-white', 'shadow-md'); }
+            event.target.classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+            event.target.classList.add('bg-bps-blue', 'text-white', 'shadow-md');
 
             renderPortfolio(category);
         }
@@ -914,54 +713,37 @@
         // Render Table and Stats
         function renderTable() {
             const tbody = document.getElementById('dataTableBody');
-            const searchVal = document.getElementById('searchInput').value.toLowerCase();
-            const filterVal = document.getElementById('filterStatus').value;
-
+            const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            const filterVal = document.getElementById('filterStatus')?.value || 'ALL';
             tbody.innerHTML = '';
 
             const filteredData = sampleDatabase.filter(item => {
-                const matchesSearch = item.id.toLowerCase().includes(searchVal) ||
-                                      item.nama.toLowerCase().includes(searchVal) ||
-                                      item.kecamatan.toLowerCase().includes(searchVal);
-                
-                const matchesFilter = filterVal === 'ALL' || item.status === filterVal;
-
-                return matchesSearch && matchesFilter;
+                const haystack = [item.id,item.kecamatan,item.survei,item.metode].join(' ').toLowerCase();
+                return haystack.includes(searchVal) && (filterVal === 'ALL' || item.status === filterVal);
             });
 
-            filteredData.forEach((item, index) => {
-                let statusBadge = '';
-                if(item.status === 'Tervalidasi') {
-                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-950/80 dark:text-green-300">Tervalidasi</span>`;
-                } else if(item.status === 'Menunggu Verifikasi') {
-                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">Menunggu</span>`;
-                } else {
-                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300">Perlu Perbaikan</span>`;
-                }
-
+            filteredData.forEach((item) => {
                 const originalIndex = sampleDatabase.indexOf(item);
+                let statusBadge = '';
+                if(item.status === 'Tervalidasi') statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-950/80 dark:text-green-300">Tervalidasi</span>';
+                else if(item.status === 'Menunggu Verifikasi') statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">Menunggu</span>';
+                else statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300">Perlu Perbaikan</span>';
 
-                const row = `
+                tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                        <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">${item.id}</td>
-                        <td class="p-4 font-medium">${item.nama}</td>
-                        <td class="p-4">${item.kecamatan}</td>
-                        <td class="p-4">${item.survei}</td>
-                        <td class="p-4 font-semibold text-bps-blue dark:text-blue-300">${item.metode}</td>
+                        <td class="p-4"><span class="font-mono font-bold text-slate-900 dark:text-white">${escapeHtml(item.id)}</span></td>
+                        <td class="p-4">${escapeHtml(item.survei)}</td>
+                        <td class="p-4">${escapeHtml(item.kecamatan)}</td>
+                        <td class="p-4 font-semibold text-bps-blue dark:text-blue-300">${escapeHtml(item.metode)}</td>
+                        <td class="p-4 font-semibold">${Number(item.target).toLocaleString('id-ID')}</td>
+                        <td class="p-4 font-semibold">${Number(item.realisasi).toLocaleString('id-ID')}</td>
                         <td class="p-4">${statusBadge}</td>
-                        <td class="p-4 text-center space-x-2">
-                            <button onclick="editData(${originalIndex})" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded dark:hover:bg-slate-800" title="Edit">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button onclick="deleteData(${originalIndex})" class="p-1.5 text-red-600 hover:bg-red-50 rounded dark:hover:bg-slate-800" title="Hapus">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                        <td class="p-4 text-right whitespace-nowrap">
+                            <button onclick="editData(${originalIndex})" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded dark:hover:bg-slate-800" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteData(${originalIndex})" class="p-1.5 text-red-600 hover:bg-red-50 rounded dark:hover:bg-slate-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                         </td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
+                    </tr>`;
             });
-
             updateStatsAndCharts();
         }
 
@@ -979,65 +761,63 @@
             document.getElementById('dataModal').classList.remove('flex');
         }
 
-        function saveData(e) {
+        async function saveData(e) {
             e.preventDefault();
-            const editIdx = parseInt(document.getElementById('editIndex').value);
-            
-            const newData = {
-                id: document.getElementById('formNks').value,
-                nama: document.getElementById('formNama').value,
-                kecamatan: document.getElementById('formKecamatan').value,
-                survei: document.getElementById('formSurvei').value,
-                metode: document.getElementById('formMetode').value,
-                status: document.getElementById('formStatus').value
+            const editIdx = parseInt(document.getElementById('editIndex').value, 10);
+            const existing = editIdx >= 0 ? sampleDatabase[editIdx] : null;
+            const payload = {
+                action: existing ? 'update' : 'create', sheet: 'HasilLapangan',
+                ID: document.getElementById('formNks').value.trim(),
+                Survei: document.getElementById('formSurvei').value.trim(),
+                Kecamatan: document.getElementById('formKecamatan').value,
+                Metode: document.getElementById('formMetode').value,
+                Target: Number(document.getElementById('formTarget').value),
+                Realisasi: Number(document.getElementById('formRealisasi').value),
+                Status: document.getElementById('formStatus').value,
             };
-
-            if (editIdx >= 0) {
-                sampleDatabase[editIdx] = newData;
-            } else {
-                sampleDatabase.unshift(newData);
-            }
-
-            closeModal();
-            renderTable();
+            try {
+                await sendLapangan(payload);
+                closeModal();
+                await loadHasilLapangan();
+            } catch (error) { alert('Gagal menyimpan data: ' + error.message); }
         }
 
         function editData(index) {
             const item = sampleDatabase[index];
+            if (!item) return;
             document.getElementById('modalTitle').innerText = 'Edit Entry Data Lapangan';
             document.getElementById('editIndex').value = index;
             document.getElementById('formNks').value = item.id;
-            document.getElementById('formNama').value = item.nama;
+            document.getElementById('formSurvei').value = item.survei;
             document.getElementById('formKecamatan').value = item.kecamatan;
+            document.getElementById('formTarget').value = item.target;
+            document.getElementById('formRealisasi').value = item.realisasi;
             document.getElementById('formSurvei').value = item.survei;
             document.getElementById('formMetode').value = item.metode;
             document.getElementById('formStatus').value = item.status;
-
             document.getElementById('dataModal').classList.remove('hidden');
             document.getElementById('dataModal').classList.add('flex');
         }
 
-        function deleteData(index) {
-            if (confirm('Apakah Anda yakin ingin menghapus record data ini dari database?')) {
-                sampleDatabase.splice(index, 1);
-                renderTable();
-            }
+        async function deleteData(index) {
+            const item = sampleDatabase[index];
+            if (!item || !confirm('Apakah Anda yakin ingin menghapus record data ini dari database?')) return;
+            try {
+                await sendLapangan({action:'delete',sheet:'HasilLapangan',ID:item.id});
+                await loadHasilLapangan();
+            } catch (error) { alert('Gagal menghapus data: ' + error.message); }
         }
 
         // Export to CSV Function
         function exportToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,ID_NKS,Nama_Responden,Kecamatan,Survei,Metode,Status\n";
+            let csvContent = "data:text/csv;charset=utf-8,ID,Survei,Kecamatan,Metode,Target,Realisasi,Status\n";
             sampleDatabase.forEach(row => {
-                csvContent += `"${row.id}","${row.nama}","${row.kecamatan}","${row.survei}","${row.metode}","${row.status}"\n`;
+                csvContent += `"${row.id}","${row.survei}","${row.kecamatan}","${row.metode}","${row.target}","${row.realisasi}","${row.status}"\n`;
             });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Data_Hasil_Survei_BPS_Demak.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            const link = document.createElement('a');
+            link.href = encodeURI(csvContent);
+            link.download = 'Data_Hasil_Lapangan_BPS.csv';
+            document.body.appendChild(link); link.click(); link.remove();
         }
 
         // Update Dashboard Charts & Counters
@@ -1125,11 +905,21 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
+        function initProfessionalProfilePhoto() {
+            const img = document.getElementById('professionalProfilePhoto');
+            const initials = document.getElementById('professionalProfileInitials');
+            if (!img || !initials || !PROFESSIONAL_PROFILE_PHOTO_URL) return;
+            img.src = PROFESSIONAL_PROFILE_PHOTO_URL;
+            img.onload = () => { img.classList.remove('hidden'); initials.classList.add('hidden'); };
+            img.onerror = () => { img.classList.add('hidden'); initials.classList.remove('hidden'); };
+        }
+
         // Initialize App
         window.onload = function() {
+            initProfessionalProfilePhoto();
             renderPortfolio('all');
             renderTable();
-            loadSheetContent();
+            loadHasilLapangan();
         };
     </script>
 </body>
