@@ -8,9 +8,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // Google Sheets / Apps Script configuration
-        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbxMbHiEZwB5cq0_SotynPP5L1Ux1-h2vByrj3Wa2mN8/dev';
+        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzm86qWSVoPnCrgSWW01eScwY4yKG67i_vYen30mxgbIF5t3ow32onAOjWuXb3N2OXlaQ/exec';
         // Isi dengan URL foto profesional Anda. Bisa berupa URL gambar dari GitHub/Google Drive/CDN.
-        const PROFESSIONAL_PROFILE_PHOTO_URL = 'https://drive.google.com/file/d/1vluWh4rhoQh8oYRFIRWfjrMVALVSsySy/view?usp=drive_link';
+        const PROFESSIONAL_PROFILE_PHOTO_URL = 'https://drive.usercontent.google.com/download?id=1vluWh4rhoQh8oYRFIRWfjrMVALVSsySy';
+        const HASIL_LAPANGAN_SCHEMA = ['ID','Survei','Kecamatan','Metode','Target','Realisasi','Status'];
         let sampleDatabase = [];
         let statusChartInstance = null;
         let districtChartInstance = null;
@@ -20,7 +21,7 @@
         }
 
         function isSheetConfigured() {
-            return GOOGLE_SHEETS_API_URL && !GOOGLE_SHEETS_API_URL.includes('https://script.google.com/macros/s/AKfycbxMbHiEZwB5cq0_SotynPP5L1Ux1-h2vByrj3Wa2mN8/dev');
+            return GOOGLE_SHEETS_API_URL && !GOOGLE_SHEETS_API_URL.includes('GANTI_DENGAN');
         }
 
         function normalizeLapangan(item) {
@@ -29,8 +30,8 @@
                 survei: String(item.Survei ?? item.survei ?? ''),
                 kecamatan: String(item.Kecamatan ?? item.kecamatan ?? ''),
                 metode: String(item.Metode ?? item.metode ?? ''),
-                target: Number(item.Target ?? item.target ?? 0),
-                realisasi: Number(item.Realisasi ?? item.realisasi ?? 0),
+                target: item.Target === '' || item.Target == null ? 0 : Number(item.Target ?? item.target ?? 0),
+                realisasi: item.Realisasi === '' || item.Realisasi == null ? 0 : Number(item.Realisasi ?? item.realisasi ?? 0),
                 status: String(item.Status ?? item.status ?? ''),
                 
             };
