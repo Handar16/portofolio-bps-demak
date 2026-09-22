@@ -7,73 +7,6 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // Google Sheets / Apps Script configuration
-        const GOOGLE_SHEETS_API_URL = 'https://script.google.com/macros/s/AKfycbzm86qWSVoPnCrgSWW01eScwY4yKG67i_vYen30mxgbIF5t3ow32onAOjWuXb3N2OXlaQ/exec';
-        // Isi dengan URL foto profesional Anda. Bisa berupa URL gambar dari GitHub/Google Drive/CDN.
-        const PROFESSIONAL_PROFILE_PHOTO_URL = 'https://drive.usercontent.google.com/download?id=1vluWh4rhoQh8oYRFIRWfjrMVALVSsySy';
-        const HASIL_LAPANGAN_SCHEMA = ['ID','Survei','Kecamatan','Metode','Target','Realisasi','Status'];
-        let sampleDatabase = [];
-        let statusChartInstance = null;
-        let districtChartInstance = null;
-
-        function escapeHtml(value) {
-            return String(value ?? '').replace(/[&<>\"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#039;'}[c]));
-        }
-
-        function isSheetConfigured() {
-            return GOOGLE_SHEETS_API_URL && !GOOGLE_SHEETS_API_URL.includes('https://script.google.com/macros/s/AKfycbzm86qWSVoPnCrgSWW01eScwY4yKG67i_vYen30mxgbIF5t3ow32onAOjWuXb3N2OXlaQ/exec');
-        }
-
-        function normalizeLapangan(item) {
-            return {
-                id: String(item.ID ?? item.id ?? ''),
-                survei: String(item.Survei ?? item.survei ?? ''),
-                kecamatan: String(item.Kecamatan ?? item.kecamatan ?? ''),
-                metode: String(item.Metode ?? item.metode ?? ''),
-                target: item.Target === '' || item.Target == null ? 0 : Number(item.Target ?? item.target ?? 0),
-                realisasi: item.Realisasi === '' || item.Realisasi == null ? 0 : Number(item.Realisasi ?? item.realisasi ?? 0),
-                status: String(item.Status ?? item.status ?? ''),
-                
-            };
-        }
-
-        async function loadHasilLapangan() {
-            if (!isSheetConfigured()) {
-                sampleDatabase = [
-                    {id:'HL-2026-001',survei:'Susenas Maret 2026',kecamatan:'Demak',metode:'CAPI',target:120,realisasi:118,status:'Tervalidasi'},
-                    {id:'HL-2026-002',survei:'Sakernas Feb 2026',kecamatan:'Sayung',metode:'CAPI',target:100,realisasi:92,status:'Menunggu Verifikasi'},
-                    {id:'HL-2026-003',survei:'Survei Ubinan Padi',kecamatan:'Wonosalam',metode:'PAPI',target:80,realisasi:75,status:'Perlu Perbaikan'}
-                ];
-                renderTable();
-                return;
-            }
-            try {
-                const response = await fetch(GOOGLE_SHEETS_API_URL + '?action=getAll&t=' + Date.now());
-                const data = await response.json();
-                sampleDatabase = Array.isArray(data.HasilLapangan) ? data.HasilLapangan.map(normalizeLapangan) : [];
-                renderTable();
-            } catch (error) {
-                console.error(error);
-                alert('Gagal mengambil Database Hasil Lapangan dari Google Sheets.');
-            }
-        }
-
-        async function sendLapangan(payload) {
-            if (!isSheetConfigured()) {
-                alert('Masukkan URL Web App Google Apps Script terlebih dahulu.');
-                return false;
-            }
-            const response = await fetch(GOOGLE_SHEETS_API_URL, {
-                method:'POST',
-                headers:{'Content-Type':'text/plain;charset=utf-8'},
-                body:JSON.stringify(payload)
-            });
-            const result = await response.json();
-            if (!result.success) throw new Error(result.message || 'Operasi gagal.');
-            return true;
-        }
-
-
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -115,10 +48,12 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Brand Identitas BPS -->
                 <div class="flex items-center space-x-3">
-                    <img src="images/logo-baru.png" alt="Logo Mitra" class="h-10 w-10 object-contain">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-bps-blue text-white font-bold text-xl shadow-md border-b-2 border-bps-orange">
+                        <i class="fa-solid fa-chart-pie text-bps-orange text-lg"></i>
+                    </div>
                     <div>
-                        <h1 class="text-lg font-bold tracking-tight text-bps-blue dark:text-white block leading-tight">Mitra BPS Demak</h1>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Enumerator & Admin Data</p>
+                        <span class="text-lg font-bold tracking-tight text-bps-blue dark:text-white block leading-tight">Mitra BPS Demak</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Enumerator & Admin Data</span>
                     </div>
                 </div>
 
@@ -248,9 +183,8 @@
                 <!-- Bio Card -->
                 <div class="lg:col-span-5 bg-slate-50 dark:bg-slate-800/60 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700">
                     <div class="flex items-center gap-4 mb-6">
-                        <div class="w-20 h-20 rounded-full bg-bps-blue flex items-center justify-center text-white text-2xl font-bold shadow-md overflow-hidden ring-4 ring-white dark:ring-slate-700">
-                            <img id="professionalProfilePhoto" src="" alt="Foto Profil Handar Arfianto" class="hidden w-full h-full object-cover">
-                            <span id="professionalProfileInitials">HA</span>
+                        <div class="w-16 h-16 rounded-full bg-bps-blue flex items-center justify-center text-white text-2xl font-bold shadow-md">
+                            HA
                         </div>
                         <div>
                             <h3 class="text-xl font-bold text-slate-900 dark:text-white">Handar Arfianto, AMd.Stat.</h3>
@@ -373,7 +307,6 @@
                 </div>
                 
                 <div class="flex items-center gap-3">
-                    <button onclick="loadHasilLapangan()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2"><i class="fa-solid fa-rotate"></i> Muat Ulang</button>
                     <button onclick="exportToCSV()" class="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition flex items-center gap-2">
                         <i class="fa-solid fa-file-csv text-bps-green text-sm"></i> Ekspor CSV
                     </button>
@@ -429,7 +362,7 @@
             <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-t-2xl border border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="relative w-full sm:w-72">
                     <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
-                    <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Cari Survei/Kecamatan/ID..." class="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue">
+                    <input type="text" id="searchInput" onkeyup="renderTable()" placeholder="Cari Nama/Kecamatan/ID..." class="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-bps-blue">
                 </div>
                 
                 <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -447,13 +380,12 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs uppercase font-bold tracking-wider">
-                            <th class="p-4">ID</th>
-                            <th class="p-4">Survei</th>
+                            <th class="p-4">ID / NKS</th>
+                            <th class="p-4">Nama Responden / KRT</th>
                             <th class="p-4">Kecamatan</th>
+                            <th class="p-4">Jenis Survei</th>
                             <th class="p-4">Metode</th>
-                            <th class="p-4">Target</th>
-                            <th class="p-4">Realisasi</th>
-                            <th class="p-4">Status</th>
+                            <th class="p-4">Status Verifikasi</th>
                             <th class="p-4 text-center">Aksi</th>
                         </tr>
                     </thead>
@@ -572,18 +504,65 @@
 
             <form id="dataForm" onsubmit="saveData(event)" class="p-6 space-y-4 text-xs">
                 <input type="hidden" id="editIndex" value="-1">
-                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ID</label><input type="text" id="formNks" required placeholder="Contoh: HL-2026-001" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Target</label><input type="number" id="formTarget" required min="0" placeholder="Contoh: 100" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
-                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Realisasi</label><input type="number" id="formRealisasi" required min="0" placeholder="Contoh: 95" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">ID NKS / Sampel</label>
+                    <input type="text" id="formNks" required placeholder="Contoh: NKS-2026-0812" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
                 </div>
-                <div class="grid grid-cols-2 gap-4">
-                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kecamatan</label><select id="formKecamatan" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>Mranggen</option><option>Karangawen</option><option>Guntur</option><option>Sayung</option><option>Karangtengah</option><option>Bonang</option><option>Demak</option><option>Wonosalam</option><option>Dempet</option><option>Kebonagung</option><option>Gajah</option><option>Karanganyar</option><option>Mijen</option><option>Wedung</option></select></div>
-                    <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Metode Pendataan</label><select id="formMetode" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>CAPI</option><option>PAPI</option></select></div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Nama Responden / Kepala RT</label>
+                    <input type="text" id="formNama" required placeholder="Nama Lengkap..." class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
                 </div>
-                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Sensus / Survei</label><input type="text" id="formSurvei" required placeholder="Misal: Susenas Maret 2026" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"></div>
-                <div><label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Verifikasi</label><select id="formStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"><option>Tervalidasi</option><option>Menunggu Verifikasi</option><option>Perlu Perbaikan</option></select></div>
-                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700"><button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl font-semibold">Batal</button><button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue text-white font-bold">Simpan Data</button></div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Kecamatan</label>
+                        <select id="formKecamatan" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                            <option value="Mranggen">Mranggen</option>
+							<option value="Karangawen">Karangawen</option>
+							<option value="Guntur">Guntur</option>
+							<option value="Sayung">Sayung</option>
+							<option value="Karangtengah">Karangtengah</option>
+							<option value="Bonang">Bonang</option>
+							<option value="Demak">Demak</option>
+                            <option value="Wonosalam">Wonosalam</option>
+                            <option value="Dempet">Dempet</option>
+                            <option value="Kebonagung">Kebonagung</option>
+                            <option value="Gajah">Gajah</option>
+                            <option value="Karanganyar">Karanganyar</option>
+                            <option value="Mijen">Mijen</option>
+                            <option value="Wedung">Wedung</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Metode Pendataan</label>
+                        <select id="formMetode" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                            <option value="CAPI">CAPI (Aplikasi Digital)</option>
+                            <option value="PAPI">PAPI (Kertas/Dokumen)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Jenis Sensus / Survei</label>
+                    <input type="text" id="formSurvei" required placeholder="Misal: Susenas Maret 2026" class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-700 dark:text-slate-300 mb-1">Status Verifikasi</label>
+                    <select id="formStatus" required class="w-full p-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-bps-blue outline-none">
+                        <option value="Tervalidasi">Tervalidasi (Clean)</option>
+                        <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                        <option value="Perlu Perbaikan">Perlu Perbaikan Lapangan</option>
+                    </select>
+                </div>
+
+                <div class="pt-4 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-700">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold">Batal</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-bps-blue hover:bg-blue-900 text-white font-bold shadow-md">Simpan Data</button>
+                </div>
             </form>
         </div>
     </div>
@@ -653,6 +632,18 @@
             }
         ];
 
+        // Initial Interactive Table Data (Simulasi Database BPS)
+        let sampleDatabase = [
+            { id: "NKS-2026-101", nama: "Siti Rahmawati", kecamatan: "Demak", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
+            { id: "NKS-2026-102", nama: "Hj. Ahmad Dahlan", kecamatan: "Sayung", survei: "Sakernas Feb 2026", metode: "CAPI", status: "Menunggu Verifikasi" },
+            { id: "NKS-2026-103", nama: "Sukarman", kecamatan: "Wonosalam", survei: "Survei Ubinan Padi", metode: "PAPI", status: "Perlu Perbaikan" },
+            { id: "NKS-2026-104", nama: "Bambang Mulyono", kecamatan: "Karangtengah", survei: "Susenas Maret 2026", metode: "CAPI", status: "Tervalidasi" },
+            { id: "NKS-2026-105", nama: "Koperasi Tani Makmur", kecamatan: "Bonang", survei: "Survei Usaha Pertanian", metode: "CAPI", status: "Tervalidasi" }
+        ];
+
+        let statusChartInstance = null;
+        let districtChartInstance = null;
+
         // Render Portfolio Cards
         function renderPortfolio(filter = 'all') {
             const grid = document.getElementById('portfolioGrid');
@@ -714,37 +705,54 @@
         // Render Table and Stats
         function renderTable() {
             const tbody = document.getElementById('dataTableBody');
-            const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
-            const filterVal = document.getElementById('filterStatus')?.value || 'ALL';
+            const searchVal = document.getElementById('searchInput').value.toLowerCase();
+            const filterVal = document.getElementById('filterStatus').value;
+
             tbody.innerHTML = '';
 
             const filteredData = sampleDatabase.filter(item => {
-                const haystack = [item.id,item.kecamatan,item.survei,item.metode].join(' ').toLowerCase();
-                return haystack.includes(searchVal) && (filterVal === 'ALL' || item.status === filterVal);
+                const matchesSearch = item.id.toLowerCase().includes(searchVal) ||
+                                      item.nama.toLowerCase().includes(searchVal) ||
+                                      item.kecamatan.toLowerCase().includes(searchVal);
+                
+                const matchesFilter = filterVal === 'ALL' || item.status === filterVal;
+
+                return matchesSearch && matchesFilter;
             });
 
-            filteredData.forEach((item) => {
-                const originalIndex = sampleDatabase.indexOf(item);
+            filteredData.forEach((item, index) => {
                 let statusBadge = '';
-                if(item.status === 'Tervalidasi') statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-950/80 dark:text-green-300">Tervalidasi</span>';
-                else if(item.status === 'Menunggu Verifikasi') statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">Menunggu</span>';
-                else statusBadge = '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300">Perlu Perbaikan</span>';
+                if(item.status === 'Tervalidasi') {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-950/80 dark:text-green-300">Tervalidasi</span>`;
+                } else if(item.status === 'Menunggu Verifikasi') {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300">Menunggu</span>`;
+                } else {
+                    statusBadge = `<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-950/80 dark:text-red-300">Perlu Perbaikan</span>`;
+                }
 
-                tbody.innerHTML += `
+                const originalIndex = sampleDatabase.indexOf(item);
+
+                const row = `
                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition">
-                        <td class="p-4"><span class="font-mono font-bold text-slate-900 dark:text-white">${escapeHtml(item.id)}</span></td>
-                        <td class="p-4">${escapeHtml(item.survei)}</td>
-                        <td class="p-4">${escapeHtml(item.kecamatan)}</td>
-                        <td class="p-4 font-semibold text-bps-blue dark:text-blue-300">${escapeHtml(item.metode)}</td>
-                        <td class="p-4 font-semibold">${Number(item.target).toLocaleString('id-ID')}</td>
-                        <td class="p-4 font-semibold">${Number(item.realisasi).toLocaleString('id-ID')}</td>
+                        <td class="p-4 font-mono font-bold text-slate-900 dark:text-white">${item.id}</td>
+                        <td class="p-4 font-medium">${item.nama}</td>
+                        <td class="p-4">${item.kecamatan}</td>
+                        <td class="p-4">${item.survei}</td>
+                        <td class="p-4 font-semibold text-bps-blue dark:text-blue-300">${item.metode}</td>
                         <td class="p-4">${statusBadge}</td>
-                        <td class="p-4 text-right whitespace-nowrap">
-                            <button onclick="editData(${originalIndex})" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded dark:hover:bg-slate-800" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button onclick="deleteData(${originalIndex})" class="p-1.5 text-red-600 hover:bg-red-50 rounded dark:hover:bg-slate-800" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="editData(${originalIndex})" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded dark:hover:bg-slate-800" title="Edit">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button onclick="deleteData(${originalIndex})" class="p-1.5 text-red-600 hover:bg-red-50 rounded dark:hover:bg-slate-800" title="Hapus">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
                         </td>
-                    </tr>`;
+                    </tr>
+                `;
+                tbody.innerHTML += row;
             });
+
             updateStatsAndCharts();
         }
 
@@ -762,63 +770,65 @@
             document.getElementById('dataModal').classList.remove('flex');
         }
 
-        async function saveData(e) {
+        function saveData(e) {
             e.preventDefault();
-            const editIdx = parseInt(document.getElementById('editIndex').value, 10);
-            const existing = editIdx >= 0 ? sampleDatabase[editIdx] : null;
-            const payload = {
-                action: existing ? 'update' : 'create', sheet: 'HasilLapangan',
-                ID: document.getElementById('formNks').value.trim(),
-                Survei: document.getElementById('formSurvei').value.trim(),
-                Kecamatan: document.getElementById('formKecamatan').value,
-                Metode: document.getElementById('formMetode').value,
-                Target: Number(document.getElementById('formTarget').value),
-                Realisasi: Number(document.getElementById('formRealisasi').value),
-                Status: document.getElementById('formStatus').value,
+            const editIdx = parseInt(document.getElementById('editIndex').value);
+            
+            const newData = {
+                id: document.getElementById('formNks').value,
+                nama: document.getElementById('formNama').value,
+                kecamatan: document.getElementById('formKecamatan').value,
+                survei: document.getElementById('formSurvei').value,
+                metode: document.getElementById('formMetode').value,
+                status: document.getElementById('formStatus').value
             };
-            try {
-                await sendLapangan(payload);
-                closeModal();
-                await loadHasilLapangan();
-            } catch (error) { alert('Gagal menyimpan data: ' + error.message); }
+
+            if (editIdx >= 0) {
+                sampleDatabase[editIdx] = newData;
+            } else {
+                sampleDatabase.unshift(newData);
+            }
+
+            closeModal();
+            renderTable();
         }
 
         function editData(index) {
             const item = sampleDatabase[index];
-            if (!item) return;
             document.getElementById('modalTitle').innerText = 'Edit Entry Data Lapangan';
             document.getElementById('editIndex').value = index;
             document.getElementById('formNks').value = item.id;
-            document.getElementById('formSurvei').value = item.survei;
+            document.getElementById('formNama').value = item.nama;
             document.getElementById('formKecamatan').value = item.kecamatan;
-            document.getElementById('formTarget').value = item.target;
-            document.getElementById('formRealisasi').value = item.realisasi;
             document.getElementById('formSurvei').value = item.survei;
             document.getElementById('formMetode').value = item.metode;
             document.getElementById('formStatus').value = item.status;
+
             document.getElementById('dataModal').classList.remove('hidden');
             document.getElementById('dataModal').classList.add('flex');
         }
 
-        async function deleteData(index) {
-            const item = sampleDatabase[index];
-            if (!item || !confirm('Apakah Anda yakin ingin menghapus record data ini dari database?')) return;
-            try {
-                await sendLapangan({action:'delete',sheet:'HasilLapangan',ID:item.id});
-                await loadHasilLapangan();
-            } catch (error) { alert('Gagal menghapus data: ' + error.message); }
+        function deleteData(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus record data ini dari database?')) {
+                sampleDatabase.splice(index, 1);
+                renderTable();
+            }
         }
 
         // Export to CSV Function
         function exportToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,ID,Survei,Kecamatan,Metode,Target,Realisasi,Status\n";
+            let csvContent = "data:text/csv;charset=utf-8,ID_NKS,Nama_Responden,Kecamatan,Survei,Metode,Status\n";
             sampleDatabase.forEach(row => {
-                csvContent += `"${row.id}","${row.survei}","${row.kecamatan}","${row.metode}","${row.target}","${row.realisasi}","${row.status}"\n`;
+                csvContent += `"${row.id}","${row.nama}","${row.kecamatan}","${row.survei}","${row.metode}","${row.status}"\n`;
             });
-            const link = document.createElement('a');
-            link.href = encodeURI(csvContent);
-            link.download = 'Data_Hasil_Lapangan_BPS.csv';
-            document.body.appendChild(link); link.click(); link.remove();
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "Data_Hasil_Survei_BPS_Demak.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         // Update Dashboard Charts & Counters
@@ -906,21 +916,10 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        function initProfessionalProfilePhoto() {
-            const img = document.getElementById('professionalProfilePhoto');
-            const initials = document.getElementById('professionalProfileInitials');
-            if (!img || !initials || !PROFESSIONAL_PROFILE_PHOTO_URL) return;
-            img.src = PROFESSIONAL_PROFILE_PHOTO_URL;
-            img.onload = () => { img.classList.remove('hidden'); initials.classList.add('hidden'); };
-            img.onerror = () => { img.classList.add('hidden'); initials.classList.remove('hidden'); };
-        }
-
         // Initialize App
         window.onload = function() {
-            initProfessionalProfilePhoto();
             renderPortfolio('all');
             renderTable();
-            loadHasilLapangan();
         };
     </script>
 </body>
