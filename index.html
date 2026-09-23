@@ -46,6 +46,9 @@
 .contact-submit:hover{filter:brightness(.95)}
 .contact-note{font-size:.82rem;opacity:.65;margin:0}
 @media(max-width:800px){.contact-grid{grid-template-columns:1fr}.contact-section{padding:55px 0}}
+
+  .doc-gallery img{transition:transform .3s ease}
+  .doc-gallery button:hover img{transform:scale(1.05)}
 </style>
 
 </head>
@@ -247,9 +250,13 @@
 // KONFIGURASI
 // ===============================
 const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbx8csHej7NeNjjo-JeVYhPwX0-a55coezs-MbhScaNDqYuCDrfxh-fhoZjr9Tl2KRz4TA/exec";
-const PROFILE_PHOTO_URL = "1WbbOw-K25F1_H9z61EDomCRv7hXpzmW6"; // Isi URL foto profesional Anda.
+const PROFILE_PHOTO_URL = "https://drive.google.com/file/d/1WbbOw-K25F1_H9z61EDomCRv7hXpzmW6/view?usp=sharing"; // Isi URL foto profesional Anda.
 
 // Data awal berasal dari workbook lampiran.
+// Kolom Gambar pada Dokumentasi mendukung beberapa URL:
+// URL1
+// URL2
+// atau URL1, URL2, URL3
 // Setelah GOOGLE_SHEETS_API_URL diisi, data dari Google Sheets akan menjadi sumber utama.
 const INITIAL_DATABASE = {"Kegiatan":[{"ID":"KEG001","Judul":"Survei Pertanian (KSA Jagung)","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Petugas Pendataan Lapangan (PPL)","Responden":"576 Segmen","Metode":"CAPI (BPS KSA App)","Status":"Rutin Berjalan","Deskripsi":"Pengamatan titik sampel segmen tanaman jagung di wilayah Kecamatan Karangtengah, Guntur, Karangawen, Dempet & Demak Kota.","Aktif":true},{"ID":"KEG002","Judul":"Laporan Pemotongan Ternak Bulanan (LPTB)","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Enumerator & Validasi","Responden":"96 Usaha/Perusahaan","Metode":"CAPI (FASIH)","Status":"Rutin Berjalan","Deskripsi":"Mengumpulkan data jumlah dan karakteristik hewan ternak yang disembelih dalam periode satu bulan.","Aktif":true},{"ID":"KEG003","Judul":"Survei Industri Besar Sedang Triwulanan (SIBS-TR)","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"36 Usaha/Perusahaan","Metode":"CAPI / PAPI","Status":"Selesai 80%","Deskripsi":"Pendataan berkala memantau aktivitas dan pertumbuhan kinerja ekonomi pada sektor industri manufaktur (pengolahan) skala menengah dan besar.","Aktif":true},{"ID":"KEG004","Judul":"Survei Pertanian (Updating Ubinan Palawija)","Kategori":"produksi","Tahun":"2025 - 2026","Peran":"Petuga Updating Lapangan","Responden":"262 Rumah Tangga","Metode":"CAPI & GIS Mapping","Status":"Selesai 100%","Deskripsi":"Pemutakhiran data rumah tangga tani yang mengusahakan tanaman palawija pada blok sensus terpilih.","Aktif":true},{"ID":"KEG005","Judul":"Survei Konversi Gabah Beras-Giling (SKGB-GILING)","Kategori":"produksi","Tahun":"2025 & 2026","Peran":"Petugas Pendataan Lapangan","Responden":"25 Usaha/Perusahaan","Metode":"PAPI & App KSA","Status":"Selesai 100%","Deskripsi":"Pengumpulan data untuk menghitung besaran angka konversi dari gabah kering giling (GKG) menjadi beras siap konsumsi.","Aktif":true},{"ID":"KEG006","Judul":"Survei Khusus Neraca Produksi (SKNP)","Kategori":"produksi","Tahun":2026.0,"Peran":"Petugas Pendataan Lapangan","Responden":"4 Usaha/Perusahaan","Metode":"Fasih BPS","Status":"Selesai 60%","Deskripsi":"Pengumpulan data bulanan mengenai struktur pendapatam, struktur pengeluaran, struktur pengeluaran, dan proses produksi dari berbagai pelaku usaha/perusahaan di Demak.","Aktif":true},{"ID":"KEG-1790002768315","Judul":"Updating Direktori Usaha Pertanian Lainnya (DUTL)","Kategori":"produksi","Tahun":"2024 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"15 Usaha/Perusahaan","Metode":"CAPI (FASIH)","Status":"Selesai 100%","Deskripsi":"Updating unit usaha pertanian non-rumah tangga dan non-perusahaan berbadan hukum di Demak","Aktif":true},{"ID":"KEG-1790002770593","Judul":"Updating Direktori Perusahaan Pertanian Lainnya (DUTL)","Kategori":"produksi","Tahun":"2024 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"3 Usaha/Perusahaan","Metode":"CAPI (FASIH)","Status":"Selesai 100%","Deskripsi":"Updating direktori unit usaha pertanian perusahaan berbadan hukum di Demak","Aktif":true},{"ID":"KEG-1790003338157","Judul":"Pemutakhiran Direktori Perusahaan Awal (DPA)","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"33 Usaha/Perusahaan","Metode":"CAPI (FASIH)","Status":"Selesai 100%","Deskripsi":"Memperbarui basis data (direktori) mengenai peofil, keberadaan dan status operasional perusahaan di Demak","Aktif":true},{"ID":"KEG-1790003573265","Judul":"Survei Kesejahteraan Petani (SKP)","Kategori":"produksi","Tahun":2026.0,"Peran":"Petugas Pendataan Lapangan","Responden":"13 Unit Usaha/ Rumah tangga","Metode":"CAPI (FASIH)","Status":"Selesai 60%","Deskripsi":"Pendataan lapangan yang dirancang khusus untuk memotret kondisi sosial-ekonomi rumah tangga petani di Demak","Aktif":true},{"ID":"KEG-1790003850695","Judul":"Survei Tahunan Perusahaan Industri Manufaktur (STPM)","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"33 Perusahaan","Metode":"CAPI (FASIH)","Status":"Selesai 80%","Deskripsi":"Pengumpulan data rutin untuk memotret gambaran utuh, kondisi, kinerja, serta perkembangan sektor industri pengolahan (manufaktur) skala menengah dan besar di Demak","Aktif":true},{"ID":"KEG-1790004183946","Judul":"Survei VP dan VN Horti","Kategori":"produksi","Tahun":"2023 - 2026","Peran":"Petugas Pendataan Lapangan","Responden":"6 Perusahaan","Metode":"CAPI (FASIH)","Status":"Selesai 100%","Deskripsi":"Pengumpukan data rutin tahunan untuk memotret karakteristik usaha dan profil produksi di subsektor pertanian tanaman hortikultura, unit usaha pertanian berbadan hukum dan unit usaha pertanian bukan perusahaan berbadan hukum di Demak","Aktif":true}],"Dokumentasi":[{"ID":"DOC001","Judul":"Pendataan Statistik Lapangan","Kategori":"Pendataan","Tahun":2026.0,"Deskripsi":"Dokumentasi kegiatan pendataan lapangan, pengumpulan data langsung dari responden di lapangan, dengan paper and pencil interviewing (PAPI) , computer assisted personal interviewing (CAPI), computer assisted telephone interviewing (CATI) dan computer assisted web interviewing (CAWI).","URL":"https://example.com/dokumentasi/doc001","Gambar":"https://drive.google.com/file/d/1LE3vJLiTClzG1WxMXsd_I2z-DPBzfumL/view?usp=drive_link","Aktif":true},{"ID":"DOC002","Judul":"Pengolahan Data Statistik","Kategori":"Pengolahan Data","Tahun":2026.0,"Deskripsi":"Dokumentasi proses pengolahan dan validasi data, mengubah data mentah menjadi informasi yang bersih, akurat dan siap dipublikasikan, meliputi: receiving batching, editing coding, entry data, analisis dan penimbangan (weighting) dan diseminasi.","URL":"https://example.com/dokumentasi/doc002","Gambar":"https://drive.google.com/file/d/100GS0oLI4QknyaKrUD2ENOu4SLjYUFfB/view?usp=drive_link","Aktif":true},{"ID":"DOC003","Judul":"Publikasi Statistik, Kecamatan Karanganyar Dalam Angka 2011","Kategori":"Publikasi","Tahun":2011.0,"Deskripsi":"Hasil publikasi dan penyajian data statistik, mengenai gambaran kondisi geografi, kependudukan, sosial serta perekonomian di wilayah Kecamatan Karanganyar, Kabupaten Demak","URL":"https://demakkab.bps.go.id/id/publication/2012/02/24/37e6d77d6c7950f8049bf589/kecamatan-karanganyar-dalam-angka-2011.html","Gambar":"https://drive.google.com/file/d/15XeJCq-zlD4KSKWmRmXHDmxHgqhVqA2L/view?usp=drive_link","Aktif":true},{"ID":"DOC004","Judul":"Publikasi Statistik, Kecamatan Bonang Dalam Angka 2012","Kategori":"Publikasi","Tahun":2012.0,"Deskripsi":"Hasil publikasi dan penyajian data statistik, mengenai gambaran kondisi geografi, kependudukan, sosial serta perekonomian di wilayah Kecamatan Bonang, Kabupaten Demak","URL":"https://demakkab.bps.go.id/id/publication/2013/01/22/20a9b80805834c33b31e58a1/kecamatan-bonang-dalam-angka-2012.html","Gambar":"https://drive.google.com/file/d/1SQKEc-5IZ3z187qv2tvCqGXBfgswqVzo/view?usp=drive_link","Aktif":true}],"HasilLapangan":[{"ID":"HL-2026-001","Survei":"Survei Konversi Gabah Beras 2026","Kecamatan":"Demak, Mijen, Wonosalam","Metode":"CAPI","Target":13.0,"Realisasi":13.0,"Status":"Tervalidasi"},{"ID":"HL-2026-002","Survei":"Survei Kerangka Sampel Area (KSA) Jagung 2026","Kecamatan":"Demak, Karangtengah, Guntur, Karangawen","Metode":"CAPI ","Target":108.0,"Realisasi":108.0,"Status":"Menunggu"},{"ID":"HL-2026-003","Survei":"Survei Kesejahteraan Petani (SKP) 2026","Kecamatan":"Demak, Karangtengah","Metode":"CAPI","Target":9.0,"Realisasi":6.0,"Status":"Menunggu"},{"ID":"HL-2026-004","Survei":"Survei Tahunan Perusahaan Industri Manufaktur (STPIM) 2026","Kecamatan":"Demak, Wonosalam, Sayung","Metode":"CAPI","Target":11.0,"Realisasi":8.0,"Status":"Perlu Perbaikan"}],"Sertifikasi":[{"ID":"CERT001","Judul":"Sertifikat Kompetensi PPPK","Kategori":"Sertifikasi","Tahun":2021.0,"Deskripsi":"Sertifikat kompetensi PPPK.","URL":"https://drive.google.com/file/d/1au6HwrjfrwtoSIsW_a9V9mhfDFrnAOlr/view?usp=drive_link","Gambar":"https://example.com/images/cert001.jpg","Aktif":true},{"ID":"CERT002","Judul":"Sertifikat Pembelajaran Python with AI","Kategori":"Pelatihan","Tahun":2023.0,"Deskripsi":"Sertifikat pelatihan python.","URL":"https://drive.google.com/file/d/1z0fm96BV7d6B7FBqqn-0ncFmoBBGsqEn/view?usp=drive_link","Gambar":"https://example.com/images/cert002.jpg","Aktif":true},{"ID":"CERT003","Judul":"Sertifikat Pembelajaran SQL with AI","Kategori":"Pelatihan","Tahun":2023.0,"Deskripsi":"Sertifikat pelatihan SQL.","URL":"https://drive.google.com/file/d/1xx4vxiSJAZfG8cjpZJJsLtqmACYfxk54/view?usp=drive_link","Gambar":"https://example.com/images/cert003.jpg","Aktif":true},{"ID":"CERT004","Judul":"Sertifikat Pembelajaran Python for Data Professional Beginner","Kategori":"Pelatihan","Tahun":2023.0,"Deskripsi":"Sertifikat Pelatihan python for data","URL":"https://drive.google.com/file/d/135Irm15ffQsQXKk0xLM6ofGmdeRmZ8dW/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT005","Judul":"Sertifikat Pembelajaran Basic Excel","Kategori":"Pelatihan","Tahun":2023.0,"Deskripsi":"Sertifikat Pelatihan excel","URL":"https://drive.google.com/file/d/12qEmR7ggRxC6MZb1y589vCIR4TWX96em/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT006","Judul":"Sertifikat Kompetensi PPPK","Kategori":"Sertifikasi","Tahun":2023.0,"Deskripsi":"Sertifikat kompetensi PPPK.","URL":"https://drive.google.com/file/d/1ihieilGSY9nqQH3JeRG7KEXDoKriQxZW/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT007","Judul":"Sertifikat Kompetensi PPPK","Kategori":"Sertifikasi","Tahun":2023.0,"Deskripsi":"Sertifikat kompetensi PPPK.","URL":"https://drive.google.com/file/d/1aRm8hKu6ylkyOVm1YO1MO_YSkzlpkb1q/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT008","Judul":"Sertifikat Pembelajaran Excel for Analytics","Kategori":"Pelatihan","Tahun":2024.0,"Deskripsi":"Sertifikat Pelatihan excel for analytics","URL":"https://drive.google.com/file/d/1tFwahzHEemt4fXfkRnplCSbjSiYR0o6Q/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT009","Judul":"Sertifikat Petugas Pemutakhiran Direktori Perusahaan Awal","Kategori":"Pelatihan","Tahun":2024.0,"Deskripsi":"Sertifikat Pelatihan Petugas","URL":"https://drive.google.com/file/d/1Lpx7T4tylt_7jp2KvWGkPHxh2mgQvqb8/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT010","Judul":"Sertifikat Petugas Survei Industri Pengolahan, Pertambangan, Energi dan Konstruksi","Kategori":"Pelatihan","Tahun":2025.0,"Deskripsi":"Sertifikat Petlatihan Petugas","URL":"https://drive.google.com/file/d/1eBG6HvOaYjPmz98xqEyzgrx7OmK9QRti/view?usp=drive_link","Gambar":null,"Aktif":true},{"ID":"CERT011","Judul":"Sertifikat Petugas Updating Direktori Perusahaan Pertanian","Kategori":"Pelatihan","Tahun":2025.0,"Deskripsi":"Sertifikat Petlatihan Petugas","URL":"https://drive.google.com/file/d/1scm0AjqV6b2lQybxtbyVkxtSVbl_9TMq/view?usp=drive_link","Gambar":"https://example.com/images/cert003.jpg","Aktif":true}]};
 
@@ -260,8 +267,17 @@ function esc(v){
 }
 function driveImage(url){
   if(!url) return "";
-  const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/);
-  return m ? `https://googleusercontent.com{m[1]}` : url;
+  const value = String(url).trim();
+
+  // Google Drive: ubah URL berbentuk /file/d/ID/... menjadi thumbnail.
+  // Thumbnail lebih stabil digunakan sebagai sumber <img> dibanding halaman /view.
+  const m = value.match(/(?:drive\.google\.com\/(?:file\/d|open\?id=)|id=)([a-zA-Z0-9_-]+)/);
+  if(m){
+    return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`;
+  }
+
+  // Jika sudah berupa URL gambar biasa, gunakan langsung.
+  return value;
 }
 function toggleTheme(){
   document.documentElement.classList.toggle("dark");
@@ -307,13 +323,105 @@ function renderLapangan(){
       <td class="p-4 text-right">${esc(t)}</td><td class="p-4 text-right font-bold">${esc(r)}<div class="progress mt-2 w-24 ml-auto"><span style="width:${p}%"></span></div><div class="text-[10px] text-right text-slate-400 mt-1">${p}%</div></td>
       <td class="p-4">${badge(x.Status)}</td></tr>`}).join("") || `<tr><td colspan="7" class="p-12 text-center text-slate-500">Tidak ada data.</td></tr>`;
 }
+function normalizeImages(value){
+  if(!value) return [];
+
+  // Mendukung:
+  // 1) satu URL
+  // 2) beberapa URL dipisahkan koma
+  // 3) beberapa URL dipisahkan baris baru
+  // 4) array ["url1","url2"]
+  let values = Array.isArray(value) ? value : String(value).split(/[\n,]+/);
+
+  return values
+    .map(v => String(v || "").trim())
+    .filter(Boolean)
+    .map(v => driveImage(v))
+    .filter(Boolean);
+}
+
+function openImageLightbox(url, title){
+  const old = document.getElementById("imageLightbox");
+  if(old) old.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "imageLightbox";
+  overlay.className = "fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4";
+  overlay.innerHTML = `
+    <button type="button" aria-label="Tutup"
+      class="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white text-2xl">
+      ×
+    </button>
+    <div class="max-w-6xl max-h-[90vh] flex flex-col items-center gap-3">
+      <img src="${esc(url)}" alt="${esc(title || "Dokumentasi")}"
+           class="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl">
+      <div class="text-white text-sm text-center">${esc(title || "")}</div>
+    </div>
+  `;
+
+  overlay.addEventListener("click", e => {
+    if(e.target === overlay || e.target.tagName === "BUTTON") overlay.remove();
+  });
+
+  document.body.appendChild(overlay);
+}
+
 function renderDokumentasi(){
-  dokumentasiGrid.innerHTML=db.Dokumentasi.map(x=>{
-    const img=driveImage(x.Gambar);
-    return `<article class="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-      <div class="h-44 bg-slate-100 dark:bg-slate-800 overflow-hidden">${img?`<img src="${esc(img)}" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\\'h-full flex items-center justify-center text-slate-400\\'>Dokumentasi</div>'">`:`<div class="h-full flex items-center justify-center text-slate-400 text-sm">Dokumentasi</div>`}</div>
-      <div class="p-5"><div class="flex justify-between gap-3"><span class="text-[10px] font-bold uppercase text-orange-600">${esc(x.Kategori)}</span><span class="text-xs text-slate-500">${esc(x.Tahun)}</span></div><h3 class="font-extrabold mt-2">${esc(x.Judul)}</h3><p class="text-sm text-slate-600 dark:text-slate-300 mt-2 line-clamp-3">${esc(x.Deskripsi)}</p>${x.URL?`<a href="${esc(x.URL)}" target="_blank" rel="noopener" class="inline-block mt-4 text-sm font-bold text-blue-600 hover:underline">Buka sumber ↗</a>`:""}</div>
-    </article>`}).join("");
+  dokumentasiGrid.innerHTML = db.Dokumentasi.map(x => {
+    const images = normalizeImages(x.Gambar);
+
+    const gallery = images.length
+      ? `<div class="grid ${images.length === 1 ? "grid-cols-1" : "grid-cols-2"} gap-2">
+          ${images.map((img, i) => `
+            <button type="button"
+              onclick='openImageLightbox(${JSON.stringify(img)}, ${JSON.stringify(x.Judul)})'
+              class="group relative h-40 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <img src="${esc(img)}"
+                   alt="${esc(x.Judul)} - Foto ${i + 1}"
+                   class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+                   loading="lazy"
+                   onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\"w-full h-full flex items-center justify-center text-slate-400 text-xs p-3 text-center\">Foto tidak dapat ditampilkan</div>'">
+              <span class="absolute bottom-2 right-2 px-2 py-1 rounded-lg bg-black/60 text-white text-[10px] font-bold">
+                Foto ${i + 1}
+              </span>
+            </button>
+          `).join("")}
+        </div>`
+      : `<div class="h-44 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-sm">
+          Belum ada foto
+        </div>`;
+
+    return `
+      <article class="rounded-2xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-lg transition">
+        <div class="p-3">
+          ${gallery}
+        </div>
+
+        <div class="px-5 pb-5">
+          <div class="flex justify-between gap-3">
+            <span class="text-[10px] font-bold uppercase text-orange-600">${esc(x.Kategori)}</span>
+            <span class="text-xs text-slate-500">${esc(x.Tahun)}</span>
+          </div>
+
+          <h3 class="font-extrabold mt-2">${esc(x.Judul)}</h3>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 mt-2 line-clamp-3">
+            ${esc(x.Deskripsi)}
+          </p>
+
+          <div class="mt-3 text-xs text-slate-500">
+            ${images.length ? `${images.length} foto dokumentasi • Klik foto untuk memperbesar` : "Belum ada foto"}
+          </div>
+
+          ${x.URL
+            ? `<a href="${esc(x.URL)}" target="_blank" rel="noopener"
+                 class="inline-block mt-4 text-sm font-bold text-blue-600 hover:underline">
+                 Buka sumber ↗
+               </a>`
+            : ""}
+        </div>
+      </article>`;
+  }).join("");
 }
 function renderSertifikasi(){
   sertifikasiGrid.innerHTML=db.Sertifikasi.map(x=>`
@@ -345,7 +453,18 @@ async function loadFromGoogleSheets(){
 function init(){
   if(localStorage.getItem("theme")==="dark") document.documentElement.classList.add("dark");
   year.textContent=new Date().getFullYear();
-  if(PROFILE_PHOTO_URL){profilePhoto.src=driveImage(PROFILE_PHOTO_URL);profilePhoto.classList.remove("hidden");profilePlaceholder.classList.add("hidden");}
+  if(PROFILE_PHOTO_URL){
+    const profileImg = driveImage(PROFILE_PHOTO_URL);
+    profilePhoto.src = profileImg;
+    profilePhoto.onload = () => {
+      profilePhoto.classList.remove("hidden");
+      profilePlaceholder.classList.add("hidden");
+    };
+    profilePhoto.onerror = () => {
+      profilePhoto.classList.add("hidden");
+      profilePlaceholder.classList.remove("hidden");
+    };
+  }
   renderAll();
   loadFromGoogleSheets();
 }
