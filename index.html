@@ -261,7 +261,7 @@ function esc(v){
 function driveImage(url){
   if(!url) return "";
   const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/);
-  return m ? `lh3.googleusercontent.com : url;
+  return m ? `https://drive.google.com/uc?export=view&id=${m[1]}` : url;
 }
 function toggleTheme(){
   document.documentElement.classList.toggle("dark");
