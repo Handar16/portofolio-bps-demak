@@ -247,7 +247,7 @@
 // KONFIGURASI
 // ===============================
 const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbx8csHej7NeNjjo-JeVYhPwX0-a55coezs-MbhScaNDqYuCDrfxh-fhoZjr9Tl2KRz4TA/exec";
-const PROFILE_PHOTO_URL = "https://drive.google.com/file/d/1WbbOw-K25F1_H9z61EDomCRv7hXpzmW6/view?usp=drive_link"; // Isi URL foto profesional Anda.
+const PROFILE_PHOTO_URL = "1WbbOw-K25F1_H9z61EDomCRv7hXpzmW6"; // Isi URL foto profesional Anda.
 
 // Data awal berasal dari workbook lampiran.
 // Setelah GOOGLE_SHEETS_API_URL diisi, data dari Google Sheets akan menjadi sumber utama.
@@ -261,7 +261,7 @@ function esc(v){
 function driveImage(url){
   if(!url) return "";
   const m = String(url).match(/\/d\/([a-zA-Z0-9_-]+)/);
-  return m ? `https://drive.google.com/uc?export=view&id=${m[1]}` : url;
+  return m ? `https://googleusercontent.com` : url;
 }
 function toggleTheme(){
   document.documentElement.classList.toggle("dark");
